@@ -1,1 +1,123 @@
 \section{The Translation Dictionary} \label{sec:translation} % SECTION:
+\pan There are categories $\FinGroup$ of finite groups, $\FinVect$ of finite-dimensional vector spaces over $\mathbb{C}$, and for each $G : \FinGroup$, a category $\FinVect^G$ of finite-dimensional complex $G$-modules. If $V : \FinVect^G$, the $G$-action will be denoted $G \xrightarrow{\rho_V} \GL(V)$ or $g \cdot x := \rho_V (g) (x)$. If it is clear, we may denote $\rho_V (g)$ by $g \cdot \blank$. The set of conjugacy classes will be denoted $\Classes(G)$. For $x \in G$, its conjugacy class is denoted $\Class(x)$.
+
+\subsection{Definitions in the Language of Characters} % SECTION:
+\pan Throughout, $G : \FinGroup$ is a group and $V : \FinVect^G$ is a finite-dimensional complex $G$-module. \ignore{(Any other type data will be specified.)}
+\begin{enumerate}[leftmargin=*, label=(D\arabic*)]
+  \item\label{def:character} {
+    \attentiveh{Character} of $V$: The function $\chi_V := \tr \circ \rho_V : G \to \mathbb{C}$. It is a class function \ref{def:class-function}.
+  }
+  \item\label{def:character-table} {
+    \attentiveh{Character table} of $G$: A listing of the characters $\chi_I$ corresponding to the finite-dimensional complex irreducible modules $I$ of $G$. As characters are class functions \ref{def:class-function}, the value on each \textit{conjugacy class} is listed. As the irreducible modules biject with the conjugacy classes, this is a square matrix. For example, behold the character table of $S_2$ (it's not interesting):
+    \begin{align*}
+      \begin{tabular}{c|cc}
+        Character & $(*)(*)$ & $(**)$ \\
+        \hline
+        $\chi_{\text{trivial}}$ & $1$ & $1$ \\
+        $\chi_{\text{sign}}$ & $1$ & $-1$
+      \end{tabular}
+    \end{align*}
+    \pan Beware -- although the row for $\chi_I$ encodes the character $\chi_I$, it is missing information on the size of the conjugacy class. This information is critical to computing the inner product of two characters \ref{def:inner-product-functions}; generically, the inner product \textbf{does not} agree with the ``dot product''.
+  }
+  \item\label{def:class-function} {
+    \attentiveh{Class function}: A function $\phi : G \to A$ which is constant on conjugacy classes of $G$. $A$ is typically $\mathbb{C}$.
+  }
+  \item\label{def:inner-product-functions} {
+    \attentiveh{Inner product} on $\mathbb{C}^G$: The vector space of functions $G \to \mathbb{C}$ carries Hermitian inner product $\langle \blank , \blank \rangle$ given by
+    \begin{align*}
+      \langle \phi, \psi \rangle
+      &:= \frac{1}{\lvert G \rvert} \sum_{g \in G} \phi(g) \cdot \overline{\psi(g)}
+    \end{align*}
+    or, for characters ($U, V : \FinVect^G$):
+    \begin{align*}
+      \langle \chi_U, \chi_V \rangle
+      &:= \frac{1}{\lvert G \rvert} \sum_{g \in G} \chi_U (g) \cdot \chi_V (g^{-1})
+    \end{align*}
+    because of \ref{grammar:inverses}.
+  }
+  \item\label{def:dimension} {
+    \attentiveh{Dimension/Degree} of $V$: The dimension $\dim(V)$.
+  }
+\end{enumerate}
+
+\skoop
+
+\subsection{Grammatical Rules of the Language of Characters} % SECTION:
+\pan I mean in this section to list some key properties that characters always satisfy. If you were to communicate using characters, these are some rules that ``always appear'' in your sentences! Throughout, $G : \FinGroup$ and $U, V : \FinVect^G$ unless otherwise specified.
+\begin{enumerate}[leftmargin=*, label=(G\arabic*)]
+  \item\label{grammar:inverses} {
+    \attentiveh{Inverses}: For $g \in G$, $\chi_V (g^{-1}) = \overline{\chi_V (g)}$.
+  }
+  \item\label{grammar:reciprocity} {
+    \attentiveh{Frobenius reciprocity}: If $H \leq G$, $U : \FinVect^H$ and $V : \FinVect^G$, then
+    \begin{align*}
+      \langle \Ind_H^G U , V \rangle
+      &= \langle U, \Res^G_H V \rangle
+      .
+    \end{align*}
+    See \ref{trans:adjunction-induction-restriction}.
+  }
+  \item\label{grammar:orthonormality-irreducibles} {
+    \attentiveh{Orthonormality of irreducibles}:
+    \begin{align*}
+      U, V \text{ both irreducible}
+      &\implies \langle \chi_U, \chi_V \rangle = \one_{U \simeq V}
+      \quad
+      \ignore{\text{(indicator function)}}
+      .
+    \end{align*}
+  }
+\end{enumerate}
+
+\skoop
+
+\subsection{Translating Between Characters and Representations} % SECTION:
+\pan Throughout, $G : \FinGroup$ and $U, V : \FinVect^G$.
+\begin{enumerate}[leftmargin=*, label=(T\arabic*)]
+  \item\label{trans:adjunction-induction-restriction} {
+    \attentiveh{Adjunction of induction to restriction}: For a subgroup $H \leq G$, the adjunction of functors $\Ind_H^G \dashv \Res^G_H$ appears as \textbf{Frobenius reciprocity}:
+    \begin{align*}
+      \FinVect^G(\Ind_H^G U, V)
+      &\simeq_{\text{nat.} U, V} \FinVect^H (U, \Res^G_H V)
+      \quad\rightsquigarrow\quad
+      \langle \Ind_H^G U , V \rangle
+      = \langle U, \Res^G_H V \rangle
+      .
+    \end{align*}
+    \pan The inner product relation is a decategorification of the (categorical) adjunction.
+  }
+  \item\label{trans:equivalence-irreducibles} {
+    \attentiveh{Equivalence of irreducible modules}: In the context where $U, V$ are irreducible, 
+    \begin{align*}
+      U \simeq V
+      &\iff \langle \chi_U, \chi_V \rangle = 1
+    \end{align*}
+    and furthermore, in the same context, 
+    \begin{align*}
+      U \not\simeq V
+      &\iff \langle \chi_U, \chi_V \rangle = 0
+      .
+    \end{align*}
+    See \ref{grammar:orthonormality-irreducibles} for a more concise statement.
+  }
+  \item\label{trans:reciprocity} {
+    \attentiveh{Frobenius reciprocity}: See \ref{trans:adjunction-induction-restriction}.
+  }
+  \item\label{trans:irreducible-factor} {
+    \attentiveh{Irreducible factors}: For $U$ irreducible,
+    \begin{align*}
+      \text{a factor of } U \text{ appears in } V
+      &\iff \langle \chi_U, \chi_V \rangle \neq 0
+      .
+    \end{align*}
+    \ignore{(A factor ``appearing'' means that $V \simeq U \oplus (\text{stuff})$.)}
+  }
+  \item\label{trans:irreducibility} {
+    \attentiveh{Irreducibility}: See also \ref{grammar:orthonormality-irreducibles}.
+    \begin{align*}
+      V \text{ is irreducible}
+      &\iff \langle \chi_V, \chi_V \rangle = 1
+      .
+    \end{align*}
+  }
+\end{enumerate}
