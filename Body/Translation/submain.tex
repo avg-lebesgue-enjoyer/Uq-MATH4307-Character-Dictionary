@@ -1,11 +1,13 @@
 \section{The Translation Dictionary} \label{sec:translation} % SECTION:
 \pan There are categories $\FinGroup$ of finite groups, $\FinVect$ of finite-dimensional vector spaces over $\mathbb{C}$, and for each $G : \FinGroup$, a category $\FinVect^G$ of finite-dimensional complex $G$-modules. If $V : \FinVect^G$, the $G$-action will be denoted $G \xrightarrow{\rho_V} \GL(V)$ or $g \cdot x := \rho_V (g) (x)$. If it is clear, we may denote $\rho_V (g)$ by $g \cdot \blank$. The set of conjugacy classes will be denoted $\Classes(G)$. For $x \in G$, its conjugacy class is denoted $\Class(x)$.
 
+\skoop
+
 \subsection{Definitions in the Language of Characters} % SECTION:
 \pan Throughout, $G : \FinGroup$ is a group and $V : \FinVect^G$ is a finite-dimensional complex $G$-module. \ignore{(Any other type data will be specified.)}
 \begin{enumerate}[leftmargin=*, label=(D\arabic*)]
   \item\label{def:character} {
-    \attentiveh{Character} of $V$: The function $\chi_V := \tr \circ \rho_V : G \to \mathbb{C}$. It is a class function \ref{def:class-function}.
+    \attentiveh{Character} of $V$: The function $\chi_V := \tr \circ \rho_V : G \to \mathbb{C}$. It is a class function \ref{def:class-function}, so it is occasionally factored through the quotient $G \twoheadrightarrow \Classes(G)$, where it is regarded as a map $\Classes(G) \to \mathbb{C}$.
   }
   \item\label{def:character-table} {
     \attentiveh{Character table} of $G$: A listing of the characters $\chi_I$ corresponding to the finite-dimensional complex irreducible modules $I$ of $G$. As characters are class functions \ref{def:class-function}, the value on each \textit{conjugacy class} is listed. As the irreducible modules biject with the conjugacy classes, this is a square matrix. For example, behold the character table of $S_2$ (it's not interesting):
@@ -34,9 +36,6 @@
       &:= \frac{1}{\lvert G \rvert} \sum_{g \in G} \chi_U (g) \cdot \chi_V (g^{-1})
     \end{align*}
     because of \ref{grammar:inverses}.
-  }
-  \item\label{def:dimension} {
-    \attentiveh{Dimension/Degree} of $V$: The dimension $\dim(V)$.
   }
 \end{enumerate}
 
@@ -85,6 +84,22 @@
       .
     \end{align*}
     \pan The inner product relation is a decategorification of the (categorical) adjunction.
+  }
+  \item\label{trans:dimension} {
+    \attentiveh{Dimension/Degree} of $V$:
+    \begin{align*}
+      \dim(V)
+      &= \chi_V (1)
+      .
+    \end{align*}
+  }
+  \item\label{trans:dimension-hom} {
+    \attentiveh{Dimension} of hom-space $\FinVect^G (U, V)$ \ignore{(this space goes by the notation $\Hom_G (U, V)$ in the course)}:
+    \begin{align*}
+      \dim \FinVect^G (U, V)
+      &= \langle \chi_U, \chi_V \rangle
+      .
+    \end{align*}
   }
   \item\label{trans:equivalence-irreducibles} {
     \attentiveh{Equivalence of irreducible modules}: In the context where $U, V$ are irreducible, 

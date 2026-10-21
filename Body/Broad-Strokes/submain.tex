@@ -1,1 +1,146 @@
 \section{The Story of Characters, Told in Broad Strokes} \label{sec:broad-strokes} % SECTION:
+\pan\textit{If you want, this section charts the ``etymology'' of each word in the dictionary!}
+\par The slogan is that \textbf{characters decategorify modules}, in analogy to how \textbf{dimension decategorifies vector spaces}.
+\begin{align*}
+  \begin{tikzcd}[ampersand replacement = \;]
+    % Title row
+      \text{Categorified}
+        \arrow[rr, "\text{character}"]
+      \;
+      \; \text{Decategorified}
+      \; \text{What is lost?}
+    \\
+    % Top row
+      \text{Module } U
+        \arrow[d, "\text{morphism space}" description]
+        \arrow[rr, mapsto]
+      \;
+      \; \text{List of numbers } \chi_U \in \mathbb{C}^G
+        \arrow[d, "\text{its dimension}" description]
+      \; \text{Algebraic data (action } {G \to \GL(U)})
+        \arrow[d, "\text{transformation of maps}" description]
+    \\
+      \text{Module } V
+        \arrow[rr, mapsto]
+      \;
+      \; \text{List of numbers } \chi_V \in \mathbb{C}^G
+      \; \text{Algebraic data: (action } {G \to \GL(V)})
+  \end{tikzcd}
+\end{align*}
+\pan To exemplify the analogy:
+\begin{align*}
+  \begin{tikzcd}[ampersand replacement = \;]
+    % Title row
+      \text{Categorified}
+        \arrow[rr, "\text{dimension}"]
+      \;
+      \; \text{Decategorified}
+      \; \text{What is lost?}
+    \\
+    % Top row
+      \text{Vect. Sp. } U
+        \arrow[d, "\text{morphism space}" description]
+        \arrow[rr, mapsto]
+      \;
+      \; \text{Number } \dim U \in \mathbb{Z}_{\geq 0}
+        \arrow[d, "\text{rank-nullity statements}" description]
+      \; \text{Algebraic data (vectors)}
+        \arrow[d, "\text{transformation of algebraic data}" description]
+    \\
+      \text{Vect. Sp. } V
+        \arrow[rr, mapsto]
+      \;
+      \; \text{Number } \dim V \in \mathbb{Z}_{\geq 0}
+      \; \text{Algebraic data (vectors)}
+  \end{tikzcd}
+\end{align*}
+\par In both situations, \textbf{the decategorification classifies the categorification up to isomorphism} -- that is, two (finite-dimensional) vector spaces are isomorphic just when they have the same dimension, and two (finite-dimensional, complex) $G$-modules are isomorphic just when they have the same character. At the level of objects, the decategorification retains all necessary information \ignore{(as one would hope of anything being granted the monacre of ``decategorification'')}. However, passing to this ``more computational invariant'' has the deficiency of losing algebraic data. On decategorifying $\FinVect$, we lose large amounts of data on how linear maps put together vector spaces. On decategorifying $\FinVect^G$, we lose large amounts of data on the actual action of $G$, and we lose information on how these actions intertwine.
+
+\skoop
+\par We now tell a fiction on the story of character theory, all in broad strokes. Once upon a time, vector spaces were decategorified by their dimension, and everyone lived happily ever after. Well, they lived up until algebraists decided to represent symmetries on vector spaces, moving us from the land $\FinVect$ to the various lands $\FinVect^G$ (for $G : \FinGroup$). In early and tumultuous days, many discoveries were made paralleling the story for vector spaces:
+\begin{align*}
+  \begin{tabular}{l|cc}
+    & Vector spaces & Modules \\
+    \hline
+    can be broken up into
+      & one-dimensional subspaces,
+      & irreducible submodules;
+    \\
+    the maps between which are
+      & effectively scalars,
+      & effectively scalars;
+    \\
+    and which form all objects by
+      & direct sum,
+      & direct sum.
+  \end{tabular}
+\end{align*}
+\par After these initial algebraic gains, however, lingered important questions -- ``How many irreducible modules are there?'', or ``Where can we find these modules?'', for example. To gain further ground, the category $\FinVect^G$ needed to be quite seriously tamed. After dusting off the history books, the algebraists attempted to decategorify $\FinVect^G$ by mirroring the dimension decategorification of $\FinVect$. Fortunately, in the context of a group representation, the dimension appears naturally:
+\begin{align*}
+  G \xrightarrow{\rho_V} \GL(V)
+  \quad\rightsquigarrow\quad
+  \rho_V (1_G)
+  = 1_V
+  = \underbrace{
+    \begin{pmatrix}
+      1 & 0 & \cdots & 0 \\
+      0 & 1 & \cdots & 0 \\
+      \vdots & \vdots & \ddots & \vdots \\
+      0 & 0 & \cdots & 1
+    \end{pmatrix}
+  }_{n \times n}
+  \quad\rightsquigarrow\quad
+  \dim(V)
+  = n
+  = \tr (\rho_V (1_G))
+  .
+\end{align*}
+\par This is a natural choice because the representing linear transformations $\rho_V (g), g \in G$ are the only extra data present within objects of $\FinVect^G$, and the only such transformation guaranteed to exist is $\rho_V (1_G) = 1_V$. The generalisation easily revealed itself -- the \textbf{character} of $V$ is the function $\chi_V : G \to \mathbb{C}$ given by $\chi_V := \tr \circ \rho_V$. The miracle is that this successfully decategorified away enough complexity to make tractable progress in understanding the category $\FinVect^G$.
+\par Perhaps the preceding text is best understood as a prologue to our story -- ``Chapter $0$'', if you will. In chapter one, we begin to understand the hom-spaces $\FinVect^G (U, V)$ for $U, V : \FinVect^G$. Every part of our story takes place over the category of vector spaces, so it is not a surprise to find that $\FinVect^G (U, V)$ is a vector space. Recording its dimension would be a first feat, and no easy one at that. In perhaps a stroke of luck, or perhaps by arcane insight dug up from historical texts\footnote{The \textit{Module-Wrestler Online Character Dictionary} keeps no good record of history.}, one can find some inspiration in a superficial look at $\FinVect^G(\blank, \blank)$:
+\begin{align*}
+  \begin{tikzcd}[ampersand replacement = \;, row sep = tiny]
+    \text{Categorified} \arrow[dddd, "\text{character}"']
+      \; \FinVect^G \times \FinVect^G
+        \arrow[r]
+      \; \FinVect
+    \\
+    %
+      \; (U, V)
+        \arrow[r, mapsto]
+      \; \FinVect^G (U, V)
+      ,
+    \\
+    % blank row
+    \\
+    % blank row
+    \\
+    \text{Decategorified}
+      \; \mathbb{C}^G \times \mathbb{C}^G
+        \arrow[r, dashed]
+      \; \mathbb{C}
+    \\
+    %
+      \; (\chi_U, \chi_V)
+        \arrow[r, mapsto]
+      \; {?}
+      .
+  \end{tikzcd}
+\end{align*}
+\par The superficial symmetry is that $\FinVect^G (\blank, \blank)$ appears to decategorify into something resembling an inner product. There is a natural choice of inner product on the set of functions $G \to \mathbb{C}$, given by
+\begin{align*}
+  \mathbb{C}^G \times \mathbb{C}^G
+  &\xrightarrow{\langle \blank, \blank \rangle}
+  \mathbb{C}
+  \\
+  (\phi, \psi)
+  &\longmapsto
+  \frac{1}{\lvert G \rvert} \sum_{g \in G} \phi(g) \cdot \overline{\psi(g)}
+  .
+\end{align*}
+\par The division by $\lvert G \rvert$ may be seen as a normalisation factor; this had proven useful to the algebraists prior. The miracle of chapter one is that \textit{this inner product idea worked} and gave rise to a rich theory, eventually culminating in the dimension formula
+\begin{align*}
+  \dim \FinVect^G (U, V)
+  &= \langle \chi_U, \chi_V \rangle
+\end{align*}
+and answering some of the lingering questions prior. How these results follow is not immediate, and will take us a couple more chapters to describe. We begin right now with chapter two.
+\par \FIXME{do it}
