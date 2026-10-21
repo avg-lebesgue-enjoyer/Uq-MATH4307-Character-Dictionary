@@ -1,0 +1,392 @@
+% SECTION: `\documentclass`
+\documentclass{article}
+
+% IMPORTS: Packages
+% Fonts
+% \usepackage[utf8]{inputenc}   % Standardise font; only load one of these
+\usepackage[T1]{fontenc}        % Standardise font; only load one of these
+% AMS and math typesetting
+\usepackage{amssymb}      % duh
+\usepackage{amsmath}      % duh
+\usepackage{amsthm}       % `\qed` etc
+\usepackage{mathtools}    % idk
+\usepackage{eucal}        % Nice `\mathcal`
+% \usepackage{esint}        % Nice integrals
+\usepackage{eqparbox}     % Among other things, `\eqmathbox`
+% Graphics and environments
+\usepackage{tabularx}                 % Extensible tables
+\usepackage{graphicx}                 % Images
+\usepackage{wrapfig}                  % Wrapping text around figures
+\usepackage{subcaption}               % Subfigures
+\usepackage[outputdir=build]{minted}  % Syntax highlighted code; NOTE: Compile with `--shell-escape`
+\usepackage{enumitem}                 % Nice enumeration, including `\begin{itemize}[nosep]`
+\usepackage{mdframed}                 % Framed environments
+\usepackage{cprotect}                 % Protecting section headings
+\usepackage{placeins}                 % \FloatBarrier
+% Tikz
+\usepackage{tikz}                     % duh
+\usetikzlibrary{
+  % automata,                           % FSMs, Turing Machines, etc.
+  arrows,                             % Many arrows :D
+  positioning,                        % Fine-grained positioning
+  calc                                % Calculated positioning
+}
+\usepackage{tikz-among-us}            % duh
+\usepackage{tikz-cd}                  % duh
+
+% Arrows :D
+\usepackage{extarrows}
+% Landscape pages
+\usepackage{pdflscape}
+% Colours
+\usepackage{xcolor}
+% Citation and bibliography
+\usepackage{bookmark}
+\usepackage[
+  backend = biber, 
+  style = alphabetic,
+  sorting = debug
+]{biblatex}
+\addbibresource{bibliography.bib}
+% Page geometry layout (margins etc)
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  total={150mm,237mm},
+  left=30mm,
+  top=30mm,
+} % A4 dimensions: 210 x 297
+% Hyperlinks
+\usepackage{hyperref}   % NOTE: Load hyperref last!
+\hypersetup{
+  colorlinks = true,
+  linkcolor = blue,
+  urlcolor = cyan,
+}
+
+
+
+% SECTION: Invert page colour
+% Uncomment to invert page colour:
+% \pagecolor[rgb]{0.1, 0.1, 0.1}
+% \color[rgb]{0.9, 0.9, 0.9}
+
+
+
+% SECTION: Assignment-specific
+\newcommand{\FIXME}[1]{\textcolor{red}{FIXME:} \textcolor{red}{#1}}
+
+\newcommand{\q}[1]{\section*{Question #1} \stepcounter{section}}
+\newcommand{\sq}[2]{\subsection*{Question #1#2} \stepcounter{subsection}}
+\newcommand{\ssq}[3]{\subsubsection*{Question #1#2 part #3} \stepcounter{subsubsection}}
+
+\newcommand{\setq}[3]{
+  \setcounter{section}{#1}
+  \setcounter{subsection}{#2}
+  \setcounter{subsubsection}{#3}
+}
+\newcommand{\incq}{
+  \stepcounter{section}
+}
+\newcommand{\incsq}{
+  \stepcounter{subsection}
+}
+\newcommand{\incssq}{
+  \stepcounter{subsubsection}
+}
+
+\newcommand{\tq}{
+  \section*{
+    Question \arabic{section}
+  }
+}
+\newcommand{\tsq}{
+  \section*{
+    Question \arabic{section}\alph{subsection}
+  }
+}
+\newcommand{\tssq}{
+  \section*{
+    Question \arabic{section}\alph{subsection} part \roman{subsubsection}
+  }
+}
+
+\newmdenv[]{assq}
+
+
+
+% SECTION: eqmathbox
+% https://tex.stackexchange.com/a/34412/5764
+\makeatletter
+\NewDocumentCommand{\eqmathbox}{o O{c} m}{%
+  \IfValueTF{#1}
+    {\def\eqmathbox@##1##2{\eqmakebox[#1][#2]{$##1##2$}}}
+    {\def\eqmathbox@##1##2{\eqmakebox{$##1##2$}}}
+  \mathpalette\eqmathbox@{#3}
+}
+\makeatother
+
+% SECTION: Convenient spacing
+\newcommand{\skoop}{\vspace{\baselineskip}}
+\newcommand{\pan}{\par\noindent}
+
+% SECTION: Standard symbols
+\newcommand*\df{\mathop{}\!\mathrm{d}}
+
+\newcommand{\deriv}[1]{\frac{\df}{\df #1}}
+\newcommand{\derivup}[2]{\frac{\df #1}{\df #2}}
+\newcommand{\pderiv}[1]{\frac{\partial}{\partial #1}}
+\newcommand{\pderivup}[2]{\frac{\partial #1}{\partial #2}}
+
+\newcommand{\powset}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pre}{\leftarrow}
+
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\zero}{\mathbf{0}}
+
+% \restrict{f}_{A} ~~> \left. f \right\rvert_{A}
+\newcommand{\restrict}[1]{\left. #1 \right\rvert}
+
+\newcommand{\actson}{\mathrel{\curvearrowright}}
+
+% SECTION: `\set`, my favourite <3
+\DeclarePairedDelimiterX\set[1]\lbrace\rbrace{\def\given{\;\delimsize\vert\;}#1}
+
+% SECTION: Matrix extension
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+% SECTION: Math operators
+% Set theory
+\DeclareMathOperator{\card}{card}
+
+% Category theory
+\DeclareMathOperator{\Set}{\mathbf{Set}}
+\DeclareMathOperator{\Cat}{\mathbf{Cat}}
+\DeclareMathOperator{\Top}{\mathbf{Top}}
+\DeclareMathOperator{\Grp}{\mathbf{Grp}}
+\DeclareMathOperator{\Vect}{\mathbf{Vect}}
+\DeclareMathOperator{\NormedSpace}{\mathbf{NS}}
+\DeclareMathOperator{\id}{id}
+
+% Linear algebra
+\DeclareMathOperator{\spans}{span}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+
+% Matrix-vector
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\transpose}{{\top}}
+
+% Group theory
+\DeclareMathOperator{\im}{im}
+
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Orb}{\mathcal{O}}
+
+% Graph theory
+\newcommand{\headless}{\relbar\mkern-9mu\relbar} % Headless arrow, used like $a \rightarrow b$
+
+% Common functions
+\DeclareMathOperator{\sgn}{sgn}
+
+% Real analysis
+
+% Complex analysis
+\let\Re\relax\DeclareMathOperator{\Re}{Re}
+\let\Im\relax\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\Arg}{Arg}
+
+% Metric space topology
+\DeclareMathOperator{\diam}{diam}
+
+% Vector calculus
+\DeclareMathOperator{\divs}{div}
+\renewcommand{\div}{\divs}
+\DeclareMathOperator{\curl}{curl}
+
+% Differential geomerty
+% \DeclareMathOperator{\fff}{\RN{1}}
+% \DeclareMathOperator{\sff}{\RN{2}}
+% \newcommand{\realproj}{\mathbb{R}\mathbb{P}}
+% \newcommand{\flatmetric}{\bar{g}}
+% \newcommand{\roundmetric}{\overset{\circ}{g}}
+% \newcommand{\realprojmetric}{\hat{g}}
+% \DeclareMathOperator{\smvfs}{\mathfrak{X}}
+% \newcommand{\connect}{\nabla}
+
+% Probability theory
+% \DeclareMathOperator{\PP}{\mathbb{P}}
+% \DeclareMathOperator{\EE}{\mathbb{E}}
+% \DeclareMathOperator{\Var}{\mathbb{V}ar}
+% \DeclareMathOperator{\Cov}{\mathbb{C}ov}
+% \newcommand{\widesim}[2][1.5]{
+%   \mathrel{\overset{#2}{\scalebox{#1}[1]{$\sim$}}}
+% }
+% \newcommand{\simiid}{\widesim{\phantom{\text{.}}\text{iid}\phantom{\text{.}}}}
+% 
+% \DeclareMathOperator{\Ber}{Ber}
+% \DeclareMathOperator{\Bin}{Bin}
+% \DeclareMathOperator{\Geom}{Geom}
+% \DeclareMathOperator{\Poi}{Poi}
+% \DeclareMathOperator{\Hyp}{Hyp}
+% \DeclareMathOperator{\Unif}{\mathcal{U}}
+% \DeclareMathOperator{\Exp}{Exp}
+% \DeclareMathOperator{\Norm}{\mathcal{N}}
+% \DeclareMathOperator{\Gam}{Gamma}
+
+
+
+% SECTION: Theorem styles
+\newtheoremstyle{break}
+  {\topsep}{\topsep}%
+  {\itshape}{}%
+  {\bfseries}{}%
+  {\newline}{}%
+
+\newtheoremstyle{broke}
+  {\topsep}{\topsep}%
+  {}{}%
+  {\bfseries}{}%
+  {\newline}{}%
+
+% \newtheoremstyle{definition}
+%   {\topsep}{\topsep}%
+%   {}{}%
+%   {\bfseries}{}%
+%   {\newline}{}%
+
+% SECTION: Standard theorem blocks
+\theoremstyle{broke}
+% NOTE: Non-`\usepackage{mdframed}` definitions
+% \newtheorem{theorem}{Theorem}[subsection]
+% \newtheorem{proposition}[theorem]{Proposition}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{corollary}[theorem]{Corollary}
+% \newtheorem{claim}[theorem]{Claim}
+% \theoremstyle{definition}
+% \newtheorem{definition}[theorem]{Definition}
+
+% NOTE: Definitions using `\usepackage{mdframed}`. 
+\newmdtheoremenv[
+  leftline = true,%
+  rightline = false,%
+  topline = false,%
+  bottomline = false,%
+  leftmargin = 0,%
+  innertopmargin = 0,%
+  innerbottommargin = 0,%
+  innerrightmargin = 0,%
+]{theorem}{Theorem}[subsection]
+\newmdtheoremenv[
+  leftline = true,%
+  rightline = false,%
+  topline = false,%
+  bottomline = false,%
+  leftmargin = 0,%
+  innertopmargin = 0,%
+  innerbottommargin = 0,%
+  innerrightmargin = 0,%
+]{proposition}[theorem]{Proposition}
+\newmdtheoremenv[
+  leftline = true,%
+  rightline = false,%
+  topline = false,%
+  bottomline = false,%
+  leftmargin = 0,%
+  innertopmargin = 0,%
+  innerbottommargin = 0,%
+  innerrightmargin = 0,%
+]{lemma}[theorem]{Lemma}
+\newmdtheoremenv[
+  leftline = true,%
+  rightline = false,%
+  topline = false,%
+  bottomline = false,%
+  leftmargin = 0,%
+  innertopmargin = 0,%
+  innerbottommargin = 0,%
+  innerrightmargin = 0,%
+]{corollary}[theorem]{Corollary}
+
+
+
+% SECTION: QED symbol
+\newcommand{\bsq}{\hfill$\blacksquare$}
+% Current QED symbol is:
+%   An amogus from \usepackage{tikz-among-us}
+%   This may generate a warning each time `\qed` is called. Ignore it.
+\renewcommand{\qedsymbol}{
+  \begin{tikzpicture}
+      \amongUsIII[xscale = -0.04, yscale = 0.04]{black}{white}
+  \end{tikzpicture}
+}
+
+% SECTION: Goal management
+\newcommand{\pf}{\pan\textbf{\underline{Proof.}}}
+\newcommand{\sol}{\pan\textbf{Solution.}}
+\newcommand{\pfthat}[1]{\pan\textbf{\underline{Proof that {#1}.}}}
+\newcommand{\pfof}[1]{\pan\textbf{\underline{Proof of {#1}.}}}
+\newcommand{\goal}[1]{
+  \vspace{0.25\baselineskip}
+  \pan\textbf{\underline{#1}}
+  \vspace{0.25\baselineskip}
+}
+% \newcommand{\smallgoal}[1]{\par\textit{\underline{(#1):}}}
+\newcommand{\case}[1]{
+  \vspace{0.25\baselineskip}
+  \pan\textit{\underline{(Case #1):}}
+  \vspace{0.25\baselineskip}
+}
+
+\newmdenv[%
+  leftline = true,%
+  rightline = false,%
+  topline = false,%
+  bottomline = false,%
+  leftmargin = 15,%
+  innertopmargin = 0,%
+  innerbottommargin = 0,%
+  innerleftmargin = 15,%
+  innerrightmargin = 0,%
+]{leftish}
+\newcommand{\withGoal}[2]{
+  \vspace{0.25 \baselineskip}%
+  \pan\textbf{\underline{#1}}%
+  \vspace{-0.25 \baselineskip}%
+  \begin{leftish}%
+    #2%
+  \end{leftish}%
+}
+\newcommand{\withCase}[2]{
+  \vspace{0.25 \baselineskip}%
+  \pan\textit{\underline{#1}}%
+  \vspace{-0.25 \baselineskip}%
+  \begin{leftish}%
+    #2%
+  \end{leftish}%
+}
+
+
+
+% SECTION: Minted setup
+\setminted{linenos = true, breaklines = true, breakanywhere = true}
+
+
+
+% SECTION: Bibliography style
+% Labels \cite{Lee13} as [Lee13] in-text.
+\DeclareFieldFormat{labelalpha}{\thefield{entrykey}}
+\DeclareFieldFormat{extraalpha}{}
+
+
+
+% SECTION: Obligatory
+\allowdisplaybreaks
