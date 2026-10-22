@@ -57,6 +57,7 @@
 \par In both situations, \textbf{the decategorification classifies the categorification up to isomorphism} -- that is, two (finite-dimensional) vector spaces are isomorphic just when they have the same dimension, and two (finite-dimensional, complex) $G$-modules are isomorphic just when they have the same character. At the level of objects, the decategorification retains all necessary information \ignore{(as one would hope of anything being granted the monacre of ``decategorification'')}. However, passing to this ``more computational invariant'' has the deficiency of losing algebraic data. On decategorifying $\FinVect$, we lose large amounts of data on how linear maps put together vector spaces. On decategorifying $\FinVect^G$, we lose large amounts of data on the actual action of $G$, and we lose information on how these actions intertwine.
 
 \skoop
+\subsection{Prologue: The Birth of Characters} % SECTION:
 \par We now tell a fiction on the story of character theory, all in broad strokes. Once upon a time, vector spaces were decategorified by their dimension, and everyone lived happily ever after. Well, they lived up until algebraists decided to represent symmetries on vector spaces, moving us from the land $\FinVect$ to the various lands $\FinVect^G$ (for $G : \FinGroup$). In early and tumultuous days, many discoveries were made paralleling the story for vector spaces:
 \begin{align*}
   \begin{tabular}{l|cc}
@@ -96,6 +97,9 @@
   .
 \end{align*}
 \par This is a natural choice because the representing linear transformations $\rho_V (g), g \in G$ are the only extra data present within objects of $\FinVect^G$, and the only such transformation guaranteed to exist is $\rho_V (1_G) = 1_V$. The generalisation easily revealed itself -- the \textbf{character} of $V$ is the function $\chi_V : G \to \mathbb{C}$ given by $\chi_V := \tr \circ \rho_V$. The miracle is that this successfully decategorified away enough complexity to make tractable progress in understanding the category $\FinVect^G$.
+
+\skoop
+\subsection{Chapter One: Separating Modules with Inner Products} % SECTION:
 \par The preceding text is best understood as a prologue to our story -- ``Chapter $0$'', if you will. In chapter one, we begin to understand the hom-spaces $\FinVect^G (U, V)$ for $U, V : \FinVect^G$. Every part of our story takes place over the category of vector spaces, so it is not a surprise to find that $\FinVect^G (U, V)$ is a vector space. Recording its dimension would be a first feat, and no easy one at that. In perhaps a stroke of luck, or perhaps by arcane insight dug up from historical texts\footnote{The \textit{Module-Wrestler Online Character Dictionary} keeps no good record of history.}, one can find some inspiration in a superficial look at $\FinVect^G(\blank, \blank)$:
 \begin{align*}
   \begin{tikzcd}[ampersand replacement = \;, row sep = tiny]
@@ -142,13 +146,14 @@
   \dim \FinVect^G (U, V)
   &= \langle \chi_U, \chi_V \rangle
 \end{align*}
-and answering some of the lingering questions prior. How these results follow is not immediate, and will take us another chapter to describe. We begin right now with chapter two.
+and answering some of the lingering questions prior. How these results follow is not immediate, and will take us another chapter to describe.
+
+\subsection{Chapter Two: Orthonormality of Irreducible Characters} % SECTION:
 \par A first observation is that
 \begin{lemma}[Characters of direct sums decompose as sums of characters]
-\label{lem:character-direct-sum}
-  \pan Let $\set*{ V_i }_{i \in \mathcal{I}}$ be objects of $\FinVect^G$. Then, $\chi_{\oplus_{i \in \mathcal{I}} V_i} = \sum_{i \in \mathcal{I}} \chi_{V_i}$.
+\label{result:character-direct-sum}
+  \pan Let $\set*{ V_{\alpha} }_{\alpha \in \mathcal{A}}$ be objects of $\FinVect^G$. Then, $\chi_{\oplus_{\alpha \in \mathcal{A}} V_{\alpha}} = \sum_{\alpha \in \mathcal{A}} \chi_{V_{\alpha}}$.
 \end{lemma}
-\par Furthermore, two decompositions into irreducibles
 \par Since any module decomposes uniquely into a direct sum of irreducible submodules, we should first study the characters $\chi_{I}$ where $I$ is irreducible. If our inner product $\langle \blank, \blank \rangle$ really is to count dimensions of hom-spaces, then Schur's lemma tells us we should expect that
 \begin{align*}
   U \simeq V \text{ are irreducible}
@@ -169,42 +174,42 @@ and answering some of the lingering questions prior. How these results follow is
 \end{align*}
 which is to say in other words that if we enumerate the characters as $\chi_I$, one for each isomorphism class of irreducible modules $I : \FinVect^G$, then these characters are orthonormal. Sure enough,
 \begin{proposition}[Orthogonality of irreducible characters]
-\label{prp:orthogonality}
-  \pan For irreducible modules $U, V : \FinVect^G$,
+\label{result:orthogonality}
+  \pan For irreducible modules $I, J : \FinVect^G$,
   \begin{align*}
-    \langle \chi_U, \chi_V \rangle
-    &= \one_{U \simeq V}
+    \langle \chi_I, \chi_J \rangle
+    &= \one_{I \simeq J}
     ,
   \end{align*}
   with the $\one$ denoting an indicator function. \ignore{(Perhaps think of the Kronecker delta.)}
 \end{proposition}
-\par Now, let us collect together each isomorphism class of irreducible $G$-modules into a set $\mathcal{I}$ \ignore{(ignore size issues for now)} and write two direct sum decompositions $U \simeq \bigoplus_{I \in \mathcal{I}} I^{\oplus u_I}$ and $V \simeq \bigoplus_{I \in \mathcal{I}} I^{\oplus v_I}$. Considering the universal properties of the direct sum, Schur's lemma tells us that
+\par Now, let us collect together one irreducible $G$-module from each isomorphism class into a set $\Irred(G)$ \ignore{(ignore size issues for now)} and write two direct sum decompositions $U \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus u_I}$ and $V \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus v_I}$. Considering the universal properties of the direct sum, Schur's lemma tells us that
 \begin{align*}
   \FinVect^G (U, V)
-  &\simeq \bigoplus_{I, J \in \mathcal{I}} \FinVect^G (I, J)^{\oplus u_I v_J}
+  &\simeq \bigoplus_{I, J \in \Irred(G)} \FinVect^G (I, J)^{\oplus u_I v_J}
   \\
-  &\simeq \bigoplus_{I, J \in \mathcal{I}} \left( \mathbb{C}^{\one_{I = J}} \right)^{\oplus u_I v_J}
+  &\simeq \bigoplus_{I, J \in \Irred(G)} \left( \mathbb{C}^{\one_{I = J}} \right)^{\oplus u_I v_J}
   \\
   \FinVect^G (U, V)
-  &\simeq \bigoplus_{I \in \mathcal{I}} \mathbb{C}^{\oplus u_I v_I}
+  &\simeq \bigoplus_{I \in \Irred(G)} \mathbb{C}^{\oplus u_I v_I}
   \\
   \implies\quad
   \dim \FinVect^G (U, V)
-  &= \sum_{I \in \mathcal{I}} u_I v_I
+  &= \sum_{I \in \Irred(G)} u_I v_I
 \end{align*}
 while if we compute the characters, the previous proposition shows us that
 \begin{align*}
   \langle \chi_U, \chi_V \rangle
-  &= \sum_{I, J \in \mathcal{I}} u_I v_J \langle \chi_I, \chi_J \rangle
+  &= \sum_{I, J \in \Irred(G)} u_I v_J \langle \chi_I, \chi_J \rangle
   \\
-  &= \sum_{I, J \in \mathcal{I}} u_I v_J \one_{I = J}
+  &= \sum_{I, J \in \Irred(G)} u_I v_J \one_{I = J}
   \\
   \langle \chi_U, \chi_V \rangle
-  &= \sum_{I \in \mathcal{I}} u_I v_I
+  &= \sum_{I \in \Irred(G)} u_I v_I
 \end{align*}
 and therefore,
 \begin{theorem}[Inner products of characters decategorify hom-spaces]
-\label{thm:inner-product-dimension}
+\label{result:inner-product-dimension}
   \pan For $U, V : \FinVect^G$, we have
   \begin{align*}
     \langle \chi_U, \chi_V \rangle
@@ -212,9 +217,9 @@ and therefore,
     .
   \end{align*}
 \end{theorem}
-\par What we have seen also gives us a strategy to extract from a character $\chi_V = \sum_{i \in \mathcal{I}} a_i \cdot \chi_{V_i}$ the coefficients $a_i \in \mathbb{Z}_{\geq 0}$ declaring the ``multiplicities'' in the direct sum $V \simeq \bigoplus_{i \in \mathcal{I}} V_i^{\oplus a_i}$ of irreducible modules $V_i$. One can either leverage orthonormality of the irreducible characters (to extract the coefficients straight away), or leverage the fact that $a_i = \dim \FinVect^G (V_i, V)$ \ignore{(which is not hard to prove)}. Either way,
-\begin{theorem}[Irreducible characters give an orthonormal basis for all characters]
-\label{thm:irreducible-basis}
+\par What we have seen also gives us a strategy to extract from a character $\chi_V = \sum_{i \in \Irred(G)} a_i \cdot \chi_{V_i}$ the coefficients $a_i \in \mathbb{Z}_{\geq 0}$ declaring the ``multiplicities'' in the direct sum $V \simeq \bigoplus_{i \in \Irred(G)} V_i^{\oplus a_i}$ of irreducible modules $V_i$. One can either leverage orthonormality of the irreducible characters (to extract the coefficients straight away), or leverage the fact that $a_i = \dim \FinVect^G (V_i, V)$ \ignore{(which is not hard to prove)}. Either way,
+\begin{proposition}[Irreducible characters give an orthonormal basis for all characters]
+\label{result:irreducible-basis}
   \pan Just as the irreducible submodules give a ``direct sum basis'' for the finite-dimensional complex $G$-modules up to isomorphism, the irreducible characters give a ``$\mathbb{Z}_{\geq 0}$-weighted basis'' for their characters. That is, we have a correspondence
   \begin{align*}
     \FinVect^G_{/{\simeq}}
@@ -222,11 +227,54 @@ and therefore,
     \set*{ \text{characters of } G }
     \\
     V
-    \simeq \bigoplus_{I \in \mathcal{I}} I^{\oplus a_I}
+    \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus a_I}
     &\longleftrightarrow
     \chi_V
-    = \sum_{I \in \mathcal{I}} a_I \cdot \chi_{I}
+    = \sum_{I \in \Irred(G)} a_I \cdot \chi_{I}
   \end{align*}
-  where $\mathcal{I}$ collects each isomorphism class of irreducible $G$-modules. \ignore{(Ignore, for now, the worry that constructing $\mathcal{I}$ may seem to ask for a choice function over proper classes. We will later provide a recipe in the language of group representations ot construct $\mathcal{I}$.)}
+  where $\Irred(G)$ collects each isomorphism class of irreducible $G$-modules. \ignore{(Ignore, for now, the worry that constructing $\Irred(G)$ may seem to ask for a choice function over proper classes. We will later provide a recipe in the language of group representations ot construct $\Irred(G)$.)}
+\end{proposition}
+\par The previous proposition has a linear algebraic deficiency. Part of the statement is that the irreducible characters give a ``basis'' of the set of all characters. It would be nice to interpret this as an actual basis for a vector space, but the set of characters is not closed under scaling by $\mathbb{C}$. Rather than doing something artificial (e.g. taking the $\mathbb{C}$-span of this set), we can consider the vector space $\mathbb{C}^G$. Thinking categorically, we find that
+\begin{lemma}[Characters are class functions]
+\label{result:characters-class-functions}
+  \pan Just as conjugate \ignore{(isomorphic)} elements $x$ and $g x g^{-1}$ of a group have conjugate \ignore{(isomorphic)} representations $\rho_V (x)$ and $\rho_V (g) \rho_V (x) \rho_V (g)^{-1}$, the character assigns these elements equal values. That is, $\chi_V (x) = \chi_V (g x g^{-1})$. \ignore{(This decategorifies isomorphism into equality.)}
+\end{lemma}
+\par This does mean that characters cannot span $\mathbb{C}^G$ for non-Abelian $G$. However, it also shows us a better target for their span.
+\begin{theorem}[Irreducible characters are an orthonormal basis for class functions]
+\label{result:irreducible-characters-orthonormal-basis}
+  \pan The set $\set*{ \chi_I \given I : \FinVect^G \text{ is irreducible} }$ is an orthonormal basis for $\mathbb{C}^{\Classes(G)}$. There is hence one irreducible character of $G$ for each conjugacy class of $G$. Categorifying, there is \ignore{(up to isomorphism)} one irreducible module of $G$ for each conjugacy class of $G$.
 \end{theorem}
-\par Here draws closed chapter two, leaving open for chapter three the question of how many irreducible representations a finite group $G$ possesses.
+\par We can now conclude that the class $\Irred(G)$ is finite, though it remains to be shown that it can be constructed as a set.
+
+\subsection{Chapter Three: Characters, Conjugacy and the Left-Regular Representation} % SECTION:
+\par All good things come in threes, and the missing partner in our story is the left-regular representation $\mathbb{C}[G]$. A telling of this story which does not take such broad strokes would actually reveal, in showing that the irreducible characters span $\mathbb{C}^{\Classes(G)}$ (as part of proving \ref{result:irreducible-characters-orthonormal-basis}), that the left-regular representation appears. To take yet another broad stroke, the conclusion here is that this representation can be completely torn apart.
+\begin{proposition}[The left-regular representation summarises the irreducible modules]
+\label{result:kill-left-regular}
+  \pan The left-regular representation $\mathbb{C}[G]$ decomposes as
+  \begin{align*}
+    \mathbb{C}[G]
+    &\simeq \bigoplus_{I \in \Irred(G)} I^{\oplus \dim I}
+    ,
+  \end{align*}
+  or in the language of characters,
+  \begin{align*}
+    \chi_{\mathbb{C}[G]}
+    &= \sum_{I \in \Irred(G)} \dim I \cdot \chi_I
+    .
+  \end{align*}
+  \pan We can thus construct $\Irred(G)$ as a set, as each irreducible module occurs in the \textit{set} of submodules of $\mathbb{C}[G]$. Furthermore, the centre of the endomorphism algebra captures the conjugacy classes and irreducible modules together:
+  \begin{align*}
+    \lvert \Classes(G) \rvert
+    = \dim\left(
+      Z\left(
+        \FinVect^G (\mathbb{C}[G], \mathbb{C}[G])
+      \right)
+    \right)
+    = \lvert \Irred(G) \rvert
+    .
+  \end{align*}
+  \pan This gives another proof, independent of \ref{result:irreducible-characters-orthonormal-basis}.
+\end{proposition}
+
+\subsection{Chapter Four: Induction is Left Adjoint to Restriction} % SECTION:
+\par \FIXME{}
