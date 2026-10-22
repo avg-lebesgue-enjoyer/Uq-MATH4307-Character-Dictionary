@@ -42,8 +42,33 @@
 \skoop
 
 \subsection{Grammatical Rules of the Language of Characters} % SECTION:
-\pan I mean in this section to list some key properties that characters always satisfy. If you were to communicate using characters, these are some rules that ``always appear'' in your sentences! Throughout, $G : \FinGroup$ and $U, V : \FinVect^G$ unless otherwise specified.
+\pan I mean in this section to list some key properties that characters always satisfy. If you were to communicate using characters, these are some rules that ``always appear'' in your sentences! Throughout, $G : \FinGroup$ and $U, V : \FinVect^G$ unless otherwise specified. The set of conjugacy classes is denoted $\Classes(G)$, and $\Irred(G)$ denotes the set of irreducible finite-dimensional complex $G$-modules, listed once per isomorphism class.
 \begin{enumerate}[leftmargin=*, label=(G\arabic*)]
+  \item\label{grammar:column-orthogonality} {
+    \attentiveh{Column orthogonality of character tables}: Listing a character table with each character along the rows and each conjugacy class along the columns,
+    \NiceMatrixOptions{
+      code-for-first-row = \color{magenta} \scriptstyle,
+      code-for-first-col = \color{magenta} \scriptstyle,
+    }
+    \begin{align*}
+      X
+      &:=
+      \begin{pNiceMatrix}[first-row, first-col]
+                              & \Class(1_G) & \Class(g_1) & \cdots  & \Class(g_{k - 1}) \\
+        \chi_{\text{trivial}} & *           & *           & \cdots  & *                 \\
+        \chi_{I_1}            & *           & *           & \cdots  & *                 \\
+        \vdots                & \vdots      & \vdots      & \ddots  & \vdots            \\
+        \chi_{I_{k - 1}}      & *           & *           & \cdots  & *                 \\
+      \end{pNiceMatrix}
+    \end{align*}
+    we have that each column is orthogonal under the dot product. That is, for $g, h \in G$ with distinct conjugacy classes $\Class(g) \neq \Class(h)$,
+    \begin{align*}
+      \sum_{i = 0}^{k - 1}
+        \chi_{I_i} (g) \chi_{I_i} (h)
+      &= 0
+      .
+    \end{align*}
+  }
   \item\label{grammar:inverses} {
     \attentiveh{Inverses}: For $g \in G$, $\chi_V (g^{-1}) = \overline{\chi_V (g)}$.
   }
@@ -65,6 +90,9 @@
       \ignore{\text{(indicator function)}}
       .
     \end{align*}
+  }
+  \item\label{grammar:irreducible-characters-orthonormal-basis} {
+    \attentiveh{Orthonormal basis formed by irreducibles}: The vector space $\mathbb{C}^{\Classes(G)}$ carries orthonormal basis $\set*{ \chi_I \given I \in \Irred(G) }$. The inner product is \textbf{not} the ``dot product'', but rather as defined at \ref{def:inner-product-functions}.
   }
 \end{enumerate}
 
@@ -94,7 +122,7 @@
     \end{align*}
   }
   \item\label{trans:dimension-hom} {
-    \attentiveh{Dimension} of hom-space $\FinVect^G (U, V)$ \ignore{(this space goes by the notation $\Hom_G (U, V)$ in the course)}:
+    \attentiveh{Dimension of hom-space} $\FinVect^G (U, V)$ \ignore{(this space often goes by $\Hom_G (U, V)$)}:
     \begin{align*}
       \dim \FinVect^G (U, V)
       &= \langle \chi_U, \chi_V \rangle
@@ -114,6 +142,14 @@
       .
     \end{align*}
     See \ref{grammar:orthonormality-irreducibles} for a more concise statement.
+  }
+  \item\label{trans:equivalence} {
+    \attentiveh{Equivalence of modules}:
+    \begin{align*}
+      U \simeq V
+      &\iff \chi_U = \chi_V
+      .
+    \end{align*}
   }
   \item\label{trans:reciprocity} {
     \attentiveh{Frobenius reciprocity}: See \ref{trans:adjunction-induction-restriction}.
