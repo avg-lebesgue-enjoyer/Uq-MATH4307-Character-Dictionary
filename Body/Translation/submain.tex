@@ -61,11 +61,18 @@
         \chi_{I_{k - 1}}      & *           & *           & \cdots  & *                 \\
       \end{pNiceMatrix}
     \end{align*}
-    we have that each column is orthogonal under the dot product. That is, for $g, h \in G$ with distinct conjugacy classes $\Class(g) \neq \Class(h)$,
+    we have that each column is orthogonal under the usual dot product\footnote{This inner product is \textit{not} weighted by the sizes of the conjugacy classes.}. That is, for $g, h \in G$ with distinct conjugacy classes $\Class(g) \neq \Class(h)$,
     \begin{align*}
       \sum_{i = 0}^{k - 1}
-        \chi_{I_i} (g) \chi_{I_i} (h)
+        \chi_{I_i} (g) \overline{\chi_{I_i} (h)}
       &= 0
+    \end{align*}
+    whilst to give the square-norm of a column, we have
+    \begin{align*}
+      \sum_{i = 0}^{k - 1}
+        \lvert \chi_{I_i} (g) \rvert^2
+      &= \frac{\lvert G \rvert}{\lvert \Class(g) \rvert}
+      = \lvert (\text{Centraliser of } g) \rvert
       .
     \end{align*}
   }
