@@ -96,7 +96,7 @@
   .
 \end{align*}
 \par This is a natural choice because the representing linear transformations $\rho_V (g), g \in G$ are the only extra data present within objects of $\FinVect^G$, and the only such transformation guaranteed to exist is $\rho_V (1_G) = 1_V$. The generalisation easily revealed itself -- the \textbf{character} of $V$ is the function $\chi_V : G \to \mathbb{C}$ given by $\chi_V := \tr \circ \rho_V$. The miracle is that this successfully decategorified away enough complexity to make tractable progress in understanding the category $\FinVect^G$.
-\par Perhaps the preceding text is best understood as a prologue to our story -- ``Chapter $0$'', if you will. In chapter one, we begin to understand the hom-spaces $\FinVect^G (U, V)$ for $U, V : \FinVect^G$. Every part of our story takes place over the category of vector spaces, so it is not a surprise to find that $\FinVect^G (U, V)$ is a vector space. Recording its dimension would be a first feat, and no easy one at that. In perhaps a stroke of luck, or perhaps by arcane insight dug up from historical texts\footnote{The \textit{Module-Wrestler Online Character Dictionary} keeps no good record of history.}, one can find some inspiration in a superficial look at $\FinVect^G(\blank, \blank)$:
+\par The preceding text is best understood as a prologue to our story -- ``Chapter $0$'', if you will. In chapter one, we begin to understand the hom-spaces $\FinVect^G (U, V)$ for $U, V : \FinVect^G$. Every part of our story takes place over the category of vector spaces, so it is not a surprise to find that $\FinVect^G (U, V)$ is a vector space. Recording its dimension would be a first feat, and no easy one at that. In perhaps a stroke of luck, or perhaps by arcane insight dug up from historical texts\footnote{The \textit{Module-Wrestler Online Character Dictionary} keeps no good record of history.}, one can find some inspiration in a superficial look at $\FinVect^G(\blank, \blank)$:
 \begin{align*}
   \begin{tikzcd}[ampersand replacement = \;, row sep = tiny]
     \text{Categorified} \arrow[dddd, "\text{character}"']
@@ -137,10 +137,96 @@
   \frac{1}{\lvert G \rvert} \sum_{g \in G} \phi(g) \cdot \overline{\psi(g)}
   .
 \end{align*}
-\par The division by $\lvert G \rvert$ may be seen as a normalisation factor; this had proven useful to the algebraists prior. The miracle of chapter one is that \textit{this inner product idea worked} and gave rise to a rich theory, eventually culminating in the dimension formula
+\par The division by $\lvert G \rvert$ may be seen as a normalisation factor; this had proven useful to the algebraists prior. The miracle of chapter one is that \textit{this inner product idea worked} and gave rise to a rich theory, eventually giving the dimension formula
 \begin{align*}
   \dim \FinVect^G (U, V)
   &= \langle \chi_U, \chi_V \rangle
 \end{align*}
-and answering some of the lingering questions prior. How these results follow is not immediate, and will take us a couple more chapters to describe. We begin right now with chapter two.
-\par \FIXME{do it}
+and answering some of the lingering questions prior. How these results follow is not immediate, and will take us another chapter to describe. We begin right now with chapter two.
+\par A first observation is that
+\begin{lemma}[Characters of direct sums decompose as sums of characters]
+\label{lem:character-direct-sum}
+  \pan Let $\set*{ V_i }_{i \in \mathcal{I}}$ be objects of $\FinVect^G$. Then, $\chi_{\oplus_{i \in \mathcal{I}} V_i} = \sum_{i \in \mathcal{I}} \chi_{V_i}$.
+\end{lemma}
+\par Furthermore, two decompositions into irreducibles
+\par Since any module decomposes uniquely into a direct sum of irreducible submodules, we should first study the characters $\chi_{I}$ where $I$ is irreducible. If our inner product $\langle \blank, \blank \rangle$ really is to count dimensions of hom-spaces, then Schur's lemma tells us we should expect that
+\begin{align*}
+  U \simeq V \text{ are irreducible}
+  \implies
+  \FinVect^G (U, V) \simeq_{\FinVect} \eqmathbox[schur-result][l]{\mathbb{C}^1}
+  \implies
+  \langle \chi_U, \chi_V \rangle
+  = 1
+  ,
+  \\
+  U \not\simeq V \text{ are irreducible}
+  \implies
+  \FinVect^G (U, V) \simeq_{\FinVect} \eqmathbox[schur-result][c]{0}
+  \implies
+  \langle \chi_U, \chi_V \rangle
+  = 0
+  ,
+\end{align*}
+which is to say in other words that if we enumerate the characters as $\chi_I$, one for each isomorphism class of irreducible modules $I : \FinVect^G$, then these characters are orthonormal. Sure enough,
+\begin{proposition}[Orthogonality of irreducible characters]
+\label{prp:orthogonality}
+  \pan For irreducible modules $U, V : \FinVect^G$,
+  \begin{align*}
+    \langle \chi_U, \chi_V \rangle
+    &= \one_{U \simeq V}
+    ,
+  \end{align*}
+  with the $\one$ denoting an indicator function. \ignore{(Perhaps think of the Kronecker delta.)}
+\end{proposition}
+\par Now, let us collect together each isomorphism class of irreducible $G$-modules into a set $\mathcal{I}$ \ignore{(ignore size issues for now)} and write two direct sum decompositions $U \simeq \bigoplus_{I \in \mathcal{I}} I^{\oplus u_I}$ and $V \simeq \bigoplus_{I \in \mathcal{I}} I^{\oplus v_I}$. Considering the universal properties of the direct sum, Schur's lemma tells us that
+\begin{align*}
+  \FinVect^G (U, V)
+  &\simeq \bigoplus_{I, J \in \mathcal{I}} \FinVect^G (I, J)^{\oplus u_I v_J}
+  \\
+  &\simeq \bigoplus_{I, J \in \mathcal{I}} \left( \mathbb{C}^{\one_{I = J}} \right)^{\oplus u_I v_J}
+  \\
+  \FinVect^G (U, V)
+  &\simeq \bigoplus_{I \in \mathcal{I}} \mathbb{C}^{\oplus u_I v_I}
+  \\
+  \implies\quad
+  \dim \FinVect^G (U, V)
+  &= \sum_{I \in \mathcal{I}} u_I v_I
+\end{align*}
+while if we compute the characters, the previous proposition shows us that
+\begin{align*}
+  \langle \chi_U, \chi_V \rangle
+  &= \sum_{I, J \in \mathcal{I}} u_I v_J \langle \chi_I, \chi_J \rangle
+  \\
+  &= \sum_{I, J \in \mathcal{I}} u_I v_J \one_{I = J}
+  \\
+  \langle \chi_U, \chi_V \rangle
+  &= \sum_{I \in \mathcal{I}} u_I v_I
+\end{align*}
+and therefore,
+\begin{theorem}[Inner products of characters decategorify hom-spaces]
+\label{thm:inner-product-dimension}
+  \pan For $U, V : \FinVect^G$, we have
+  \begin{align*}
+    \langle \chi_U, \chi_V \rangle
+    &= \dim \FinVect^G (U, V)
+    .
+  \end{align*}
+\end{theorem}
+\par What we have seen also gives us a strategy to extract from a character $\chi_V = \sum_{i \in \mathcal{I}} a_i \cdot \chi_{V_i}$ the coefficients $a_i \in \mathbb{Z}_{\geq 0}$ declaring the ``multiplicities'' in the direct sum $V \simeq \bigoplus_{i \in \mathcal{I}} V_i^{\oplus a_i}$ of irreducible modules $V_i$. One can either leverage orthonormality of the irreducible characters (to extract the coefficients straight away), or leverage the fact that $a_i = \dim \FinVect^G (V_i, V)$ \ignore{(which is not hard to prove)}. Either way,
+\begin{theorem}[Irreducible characters give an orthonormal basis for all characters]
+\label{thm:irreducible-basis}
+  \pan Just as the irreducible submodules give a ``direct sum basis'' for the finite-dimensional complex $G$-modules up to isomorphism, the irreducible characters give a ``$\mathbb{Z}_{\geq 0}$-weighted basis'' for their characters. That is, we have a correspondence
+  \begin{align*}
+    \FinVect^G_{/{\simeq}}
+    &\longleftrightarrow
+    \set*{ \text{characters of } G }
+    \\
+    V
+    \simeq \bigoplus_{I \in \mathcal{I}} I^{\oplus a_I}
+    &\longleftrightarrow
+    \chi_V
+    = \sum_{I \in \mathcal{I}} a_I \cdot \chi_{I}
+  \end{align*}
+  where $\mathcal{I}$ collects each isomorphism class of irreducible $G$-modules. \ignore{(Ignore, for now, the worry that constructing $\mathcal{I}$ may seem to ask for a choice function over proper classes. We will later provide a recipe in the language of group representations ot construct $\mathcal{I}$.)}
+\end{theorem}
+\par Here draws closed chapter two, leaving open for chapter three the question of how many irreducible representations a finite group $G$ possesses.
