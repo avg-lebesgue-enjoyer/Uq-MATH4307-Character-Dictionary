@@ -1,5 +1,5 @@
 \section{The Translation Dictionary} \label{sec:translation} % SECTION:
-\pan There are categories $\FinGroup$ of finite groups, $\FinVect$ of finite-dimensional vector spaces over $\mathbb{C}$, and for each $G : \FinGroup$, a category $\FinVect^G$ of finite-dimensional complex $G$-modules. If $V : \FinVect^G$, the $G$-action will be denoted $G \xrightarrow{\rho_V} \GL(V)$ or $g \cdot x := \rho_V (g) (x)$. If it is clear, we may denote $\rho_V (g)$ by $g \cdot \blank$. The set of conjugacy classes will be denoted $\Classes(G)$. For $x \in G$, its conjugacy class is denoted $\Class(x)$.
+\pan There are categories $\FinGroup$ of finite groups, $\FinVect$ of finite-dimensional vector spaces over $\mathbb{C}$, and for each $G : \FinGroup$, a category $\FinVect^G$ of finite-dimensional complex $G$-modules. If $V : \FinVect^G$, the $G$-action will be denoted $G \xrightarrow{\rho_V} \GL(V)$. The set of conjugacy classes will be denoted $\Classes(G)$. For $x \in G$, its conjugacy class is denoted $\Class(x)$.
 
 \skoop
 
@@ -7,7 +7,7 @@
 \pan Throughout, $G : \FinGroup$ is a group and $V : \FinVect^G$ is a finite-dimensional complex $G$-module. \ignore{(Any other type data will be specified.)}
 \begin{enumerate}[leftmargin=*, label=(D\arabic*)]
   \item\label{def:character} {
-    \attentiveh{Character} of $V$: The function $\chi_V := \tr \circ \rho_V : G \to \mathbb{C}$. It is a class function \ref{def:class-function}, so it is occasionally factored through the quotient $G \twoheadrightarrow \Classes(G)$, where it is regarded as a map $\Classes(G) \to \mathbb{C}$.
+    \attentiveh{Character} of $V$: The function $\chi_V := \tr \circ \rho_V : G \to \mathbb{C}$. It is a class function \ref{def:class-function}, so it is often factored through the quotient $G \twoheadrightarrow \Classes(G)$, where it is regarded as a map $\Classes(G) \to \mathbb{C}$.
   }
   \item\label{def:character-table} {
     \attentiveh{Character table} of $G$: A listing of the characters $\chi_I$ corresponding to the finite-dimensional complex irreducible modules $I$ of $G$. As characters are class functions \ref{def:class-function}, the value on each \textit{conjugacy class} is listed. As the irreducible modules biject with the conjugacy classes, this is a square matrix. For example, behold the character table of $S_2$ (it's not interesting):
@@ -22,7 +22,7 @@
     \pan Beware -- although the row for $\chi_I$ encodes the character $\chi_I$, it is missing information on the size of the conjugacy class. This information is critical to computing the inner product of two characters \ref{def:inner-product-functions}; generically, the inner product \textbf{does not} agree with the ``dot product''.
   }
   \item\label{def:class-function} {
-    \attentiveh{Class function}: A function $\phi : G \to A$ which is constant on conjugacy classes of $G$. $A$ is typically $\mathbb{C}$.
+    \attentiveh{Class function}: A function $G \to A$ which is constant on conjugacy classes of $G$. $A$ is typically $\mathbb{C}$.
   }
   \item\label{def:kernel} {
     \attentiveh{Kernel} of the character $\chi_V$: The normal subgroup $\set*{ g \in G \given \chi_V (g) = \chi_V (1) }$. More details at \ref{trans:normal-subgroups}.
@@ -30,8 +30,8 @@
   \item\label{def:inner-product-functions} {
     \attentiveh{Inner product} on $\mathbb{C}^G$: The vector space of functions $G \to \mathbb{C}$ carries Hermitian inner product $\langle \blank , \blank \rangle$ given by
     \begin{align*}
-      \langle \phi, \psi \rangle
-      &:= \frac{1}{\lvert G \rvert} \sum_{g \in G} \phi(g) \cdot \overline{\psi(g)}
+      \langle \varphi, \psi \rangle
+      &:= \frac{1}{\lvert G \rvert} \sum_{g \in G} \varphi(g) \cdot \overline{\psi(g)}
     \end{align*}
     or, for characters ($U, V : \FinVect^G$):
     \begin{align*}
@@ -80,7 +80,13 @@
     \end{align*}
   }
   \item\label{grammar:dimensions-divide-index-centre} {
-    \attentiveh{Dimensions/degrees of irreducibles divide centre indices}: $\dim(V) = \chi_V (1) \mid [G : Z(G)]$.
+    \attentiveh{Dimensions/degrees of irreducibles divide centre indices}:
+    \begin{align*}
+      \dim(V)
+      &= \chi_V (1)
+      \mid [G : Z(G)]
+      .
+    \end{align*}
   }
   \item\label{grammar:inverses} {
     \attentiveh{Inverses}: For $g \in G$, $\chi_V (g^{-1}) = \overline{\chi_V (g)}$.
@@ -183,7 +189,7 @@
     \attentiveh{Normal subgroups}: For $N \subseteq G$,
     \begin{align*}
       N \trianglelefteq G
-      &\iff \exists \mathcal{J} \subseteq \Irred(G) .
+      &\iff \exists \mathcal{J} \subseteq \Irred(G) .\;
         N = \bigcap_{I \in \mathcal{J}} \Ker \chi_I
       .
     \end{align*}
@@ -213,6 +219,7 @@
     \begin{align*}
       \lvert \Centraliser(g) \rvert
       &= \sum_{I \in \Irred(G)} \lvert \chi_I (g) \rvert^2
+      .
     \end{align*}
   }
   \item\label{trans:order} {
@@ -221,6 +228,7 @@
       \lvert G \rvert
       &= \sum_{I \in \Irred(G)} \lvert \chi_I (1_G) \rvert^2
       = \sum_{I \in \Irred(G)} \left( \dim I \right)^2
+      .
     \end{align*}
   }
 \end{enumerate}
