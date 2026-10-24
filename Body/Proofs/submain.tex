@@ -1,2 +1,458 @@
 \section{Proofs} \label{sec:proofs} % SECTION:
-\pan All proofs are collected here. They are all reproduced by myself for my own practice. \FIXME{Actually do it}
+\pan All proofs are collected here. They are all reproduced by myself for my own practice. We assume results from representation theory which occur ``prior to character theory'' -- for example, Schur's lemma and Maschke's theorem. Throughout, $G : \FinGroup$ and $U, V : \FinVect^G$ unless otherwise specified.
+
+\subsection{Proof that characters are class functions} % SECTION:
+\pan $\chi_V (g x g^{-1}) = \tr (\rho_V (g) \rho_V (x) \rho_V (g)^{-1}) = \tr (\rho_V (x)) = \chi_V (x)$ for any $x, g \in G$. \qed
+
+\subsection{Proof that characters of inverses are conjugates of characters \ref{grammar:inverses}} % SECTION:
+\pan Fix $g \in G$. We wish to show that $\chi_V (g^{-1}) = \overline{\chi_V (g)}$. Characters are traces, so $\chi_V (g^{-1})$ is the sum of eigenvalues of $\rho(g^{-1}) = \rho(g)^{-1}$, and thus is the sum $\sum_{\lambda} 1 / \lambda$ for eigenvalues $\lambda$ of $\rho(g)$ (counted with multiplicity). So, we will be done if we can show that each such $\lambda$ lies on the unit circle, for then $1 / \lambda = \overline{\lambda}$. Indeed, if we let $n$ be the (finite!) order of $g$, then $g^n = 1_G$ implies that $\lambda^n = 1$. Being a root of unity, $\lambda$ lies on the unit circle. \qed
+
+\subsection{Proof that irreducible characters are orthonormal: \ref{grammar:orthonormality-irreducibles}, \ref{trans:equivalence-irreducibles}} % SECTION:
+\pan Fix $I, J \in \Irred(G)$. By Schur's lemma, the task is essentially to show $\langle \chi_I, \chi_J \rangle = \dim \FinVect^G (I, J)$. To make our lives easier, identify $I \simeq \mathbb{C}^m$ and $J \simeq \mathbb{C}^n$ with matrix representations $M : G \to \GL \mathbb{C}^m$ and $N : G \to \GL \mathbb{C}^n$. We will denote the entries of a matrix $f$ by $f^j_i$, with $i$ indexing the columns and $j$ indexing the rows; in particular, $M(g)^j_i \in \mathbb{C}$ denotes an entry of $M(g)$.
+\par Notice first that the ``averaging trick'' turns vector space morphisms to module morphisms:
+\begin{align*}
+  f \in \FinVect(I, J)
+  \implies
+  \frac{1}{\lvert G \rvert} \sum_{g \in G}
+    \rho_J (g) \circ f \circ \rho_I (g^{-1})
+  \in \FinVect^G (I, J)
+\end{align*}
+and the requisite commutative diagram is easily checked. A cheeky way to encode this by matrix representation is
+\begin{align*}
+  f \in \Mat_{n \times m} (\mathbb{C})
+  \implies
+  \frac{1}{\lvert G \rvert} \sum_{g \in G}
+    N (g) \circ f \circ M (g^{-1})
+  \text{ is a module homomorphism}
+  .
+\end{align*}
+\par Doing things this way, we can play a bit more of a trick and consider ``all of these at once'' by introducing formal variables. Let $
+  \set*{
+    a^j_i
+  \given
+    i \in \set*{1, \dots, m}
+    \text{ and } j \in \set*{1, \dots, n}
+  }
+$ be a set of distinct formal variables, and as the notation suggests, consider the matrix $a \in \Mat_{n \times m} \mathbb{C}[\text{all } a^j_i \text{'s}]$ \ignore{(the indices $i$ and $j$ are understood to run over all $i \in \set*{1, \dots, m}$ and $j \in \set*{1, \dots, n}$ in the preceding notation; sorry, it's horrible)}. We denote the ``averaged version'' of this ``formal map'' by $\alpha$; more precisely,
+\begin{align*}
+  \alpha^j_i
+  &:= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+    N(g)^j_v a^v_u M(g^{-1})^u_i
+  \in \mathbb{C}[\text{all } a^j_i \text{'s}]
+  ,
+  & \alpha
+  &:= \left(
+    \alpha^j_i
+  \right)_{i, j}
+  \in \Mat_{n \times m} \mathbb{C}[\text{all } a^j_i \text{'s}]
+  ,
+\end{align*}
+with implicit summation on repeated indices \ignore{(we could also use this convention to sum over the repeated $g$, but elect not to)}. Then, assignment of values $f^j_i$ to variables $a^j_i$ defines actual module morphisms $
+  \restrict{\alpha}_{a^j_i := f^j_i}
+  \in \FinVect^G (I, J)
+$. The formal matrix $\alpha$ is the zero matrix of $\Mat_{n \times m} \mathbb{C}[\text{all } a^j_i \text{'s}]$ just when the matrices $\restrict{\alpha}_{a^j_i := f^j_i}$ are all zero the matrix in $\Mat_{n \times m} \mathbb{C}$ -- i.e. all the zero map in $\FinVect^G (I, J)$. The rest of this proof is an algebraic examination of what happens to $\alpha$ upon applying Schur's lemma.
+
+\withCase{In the case where $I \not\simeq J$\dots{}}{
+  \pan Each $\restrict{\alpha}_{a^j_i := f^j_i}$ is the zero map, and we conclude that $\alpha = 0$. Now, for all $i, u \in \set*{1, \dots, m}$ and $j, v \in \set*{1, \dots, n}$, if we read the coefficient of $a^u_v$ in $\alpha^j_i$, we find
+  \begin{align*}
+    0
+    &= \alpha^j_i
+    = \frac{1}{\lvert G \rvert} \sum_{g \in G}
+      N(g)^j_v a^v_u M(g^{-1})^u_i
+    \\
+    \implies\quad
+    0
+    &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+      N(g)^j_v M(g^{-1})^u_i
+    \qquad \forall i, j, u, v
+    .
+  \end{align*}
+  \pan We can now put $u := i$ and $v := j$, and sum on $i, j$ to complete this branch of the proof.
+  \begin{align*}
+    \implies\quad
+    0
+    &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+      \sum_j N(g)^j_j
+      \cdot \sum_i M(g^{-1})^i_i
+    \\
+    &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+      \tr (\rho_J (g))
+      \cdot \tr (\rho_I (g^{-1}))
+    \\
+    &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+      \tr (\rho_J (g))
+      \cdot \tr (\rho_I (g^{-1}))
+    \\
+    &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+      \chi_J (g)
+      \cdot \chi_I (g^{-1})
+    \\
+    &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+      \chi_J (g)
+      \cdot \overline{\chi_I (g)}
+    \\
+    0
+    &= \left\langle
+      \chi_J
+    , \chi_I
+    \right\rangle
+    \\
+    \implies\quad
+    0
+    &= \left\langle \chi_I , \chi_J \right\rangle
+    .
+  \end{align*}
+}
+
+\withCase{In the case where $I \simeq J$\dots{}}{
+  \pan Simplifying our lives again, assume without loss of generality that $I = J$ (so $m = n$ and $M = N$). Schur's lemma tells us that each $\restrict{\alpha}_{a^j_i := f^j_i} = \lambda_{f} \id_I$ for scalar multiples $\lambda_{f}$. Denoting by $f$ the linear transformation on $I = \mathbb{C}^m$ given by the matrix $(f^j_i)_{i, j}$, the scalar $\lambda_{f}$ itself may be recovered by
+  \begin{align*}
+    \lambda_{f}
+    &= \frac{1}{m} \tr (\lambda_{f^j_i} \id_I)
+    \\
+    &= \frac{1}{m} \tr \left(
+      \restrict{\alpha}_{a^j_i := f^j_i}
+    \right)
+    \\
+    &= \frac{1}{m \lvert G \rvert} \sum_{g \in G}
+      \tr\left(
+        \rho_I (g)
+        \circ f
+        \circ \rho_I (g^{-1})
+      \right)
+    \\
+    &= \frac{1}{m \lvert G \rvert} \sum_{g \in G}
+      \tr f
+    \\
+    \lambda_f
+    &= \frac{1}{m} f^i_i
+    .
+  \end{align*}
+  \pan We can use this formula to express $\alpha$ as follows.
+  \begin{align*}
+    \restrict{\alpha}_{a^j_i := f^j_i}
+    &= \lambda_f \id_I
+    = \frac{1}{m} f^i_i \id_I
+    \quad\implies\quad
+    \alpha
+    = \frac{1}{m} a^i_i \id_{m \times m}
+  \end{align*}
+  \pan The rest of this argument is chasing down coefficients of the $a^v_u$. Unless summed over, the variables $i, j, u, v$ are arbitrary elements of $\set*{1, \dots, n}$.
+  \begin{align*}
+    \frac{1}{m} \delta^v_u \delta^j_i
+    &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+      M(g)^j_v M(g^{-1})^u_i
+    \\
+    \implies\quad
+    \frac{1}{m} \delta^j_i \delta^j_i
+    &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+      M(g)^j_j M(g^{-1})^i_i
+    \\
+    \implies\quad
+    1
+    &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+      \tr(\rho_I (g)) \cdot \tr(\rho_I (g^{-1}))
+    \\
+    \implies\quad
+    1
+    &= \langle \chi_I, \chi_I \rangle
+  \end{align*}
+}
+\pan Having dealt with both cases, we are finished with this proof. \qed
+
+\subsection{Proof that irreducible characters give an orthonormal basis for class functions: \ref{grammar:irreducible-characters-orthonormal-basis}} % SECTION:
+\pan The irreducible characters are orthonormal and hence linearly independent. As the characters are class functions, it remains only to show that the set $\beta := \set*{ \chi_I \given I \in \Irred(G) }$ of irreducible characters spans $\mathbb{C}^{\Classes(G)}$. If\footnote{This argument is a re-framing of that at \href{https://groupprops.subwiki.org/wiki/Splitting_implies_characters_form_a_basis_for_space_of_class_functions}{on groupprops}.} we put $L := \spans \beta$, then $\mathbb{C}^{\Classes(G)} = L \oplus L^{\perp}$ and so it is enough to show that $L^{\perp} = 0$.
+\par Fix $f \in L^{\perp}$. Schur's lemma tells us that for $I \in \Irred(G)$, we have an isomorphism
+\begin{align*}
+  \mathbb{C} & \simeq_{\FinVect} \FinVect^G (I, I) \\
+  \lambda & \mapsto \lambda \cdot 1_I
+\end{align*}
+and so, because $\dim I \neq 0$, we get that the trace is also an isomorphism
+\begin{align*}
+  \tr : \FinVect^G (I, I) & \simeq_{\FinVect} \mathbb{C}
+  .
+\end{align*}
+\par The rest of the proof now falls into place because the characters are given in terms of traces, and the isomorphism lets us ``undo'' the trace operation. To be more precise, observe that
+\begin{align*}
+  0
+  &= \langle f, \chi_I \rangle
+  = \frac{1}{\lvert G \rvert} \sum_{g \in G}
+    f(g) \tr (\rho_I (g^{-1}))
+  = \tr\left(
+    \frac{1}{\lvert G \rvert} \sum_{g \in G}
+      f(g) \rho_I (g^{-1})
+  \right)
+  \\
+  \implies\quad
+  0
+  &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+    f(g) \rho_I (g^{-1})
+  .
+\end{align*}
+\par In the above, we must technically check that $
+  \frac{1}{\lvert G \rvert} \sum_{g \in G}
+    f(g) \rho_I (g^{-1})
+$ is actually $G$-equivariant; this is not hard. Now, for $V : \FinVect^G$, we can decompose $V$ into irreducible submodules and apply the above to find that
+\begin{align*}
+  \frac{1}{\lvert G \rvert} \sum_{g \in G}
+    f(g) \rho_V (g^{-1})
+  &= 0
+  .
+\end{align*}
+\par Setting $V := \mathbb{C}[G]$ to be the left-regular representation, the transformations $\rho_V (g^{-1})$ are now linearly independent, so the coefficients $f(g)$ must all be zero. That is, $f = 0$ and hence $L^{\perp} = 0$. \qed
+
+\subsection{Proof that the class number counts irreducible modules: \ref{trans:class-number}} % SECTION:
+\pan Read this from any of \ref{result:irreducible-characters-orthonormal-basis}, \ref{result:kill-left-regular}, or \ref{grammar:irreducible-characters-orthonormal-basis}. \qed
+
+\subsection{Proof that number of irreducible modules count whether a group is Abelian: \ref{trans:abelian-iff-big-character-table}} % SECTION:
+\pan $G$ is Abelian just when each conjugacy class has size one, and hence just when there are $\lvert G \rvert$ conjugacy classes. This number is also counted by $\lvert \Irred(G) \rvert$. \qed
+
+\subsection{Proof of character table column orthogonality and orders of centralisers: \ref{grammar:column-orthogonality}, \ref{trans:order-centralisers}} % SECTION:
+\pan The goal is essentially to understand the various dot products $\sum_{I \in \Irred(G)} \chi_I (g) \overline{\chi_I (h)}$ for $g, h \in G$. Fixing $h$ and letting $g$ vary, we have a class function $f := \sum_{I \in \Irred(G)} \overline{\chi_I (h)} \chi_I$. The goal is essentially to show that $f = F$, for $F := \lvert \Centraliser (h) \rvert \cdot 1_{\blank \in \Class(h)}$. Since the irreducible characters form a basis and $f$ is already written as a linear combination of irreducible characters, it is enough to calculate the coefficients $F_I$ in the expansion $F =: \sum_{I \in \Irred(G)} F_I \chi_I$. Fixing $I \in \Irred(G)$,
+\begin{align*}
+  F_I
+  &= \langle F, \chi_I \rangle
+  \\
+  &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+    \lvert \Centraliser (h) \rvert \cdot 1_{g \in \Class(h)}
+    \cdot \overline{\chi_I (g)}
+  \\
+  &= \frac{\lvert \Centraliser (h) \rvert \cdot \lvert \Class(h) \rvert}{\lvert G \rvert}
+    \cdot \overline{\chi_I (h)}
+  \\
+  F_I
+  &= \overline{\chi_I (h)}
+\end{align*}
+and therefore, $F = f$. \qed
+
+\subsection{Proof that dimensions of modules are computed by characters: \ref{trans:dimension}} % SECTION:
+\pan Obvious. \qed
+
+\subsection{Proof that order of group is square sum of irreducible dimensions: \ref{trans:order}} % SECTION:
+\pan Apply \ref{trans:order-centralisers} to the element $1_G \in G$, whose centraliser is $G$, and then use the fact that $\dim(V) = \chi_V (1_G)$. \qed
+
+\subsection{Proof that characters of direct sums are sums of characters: \ref{trans:direct-sum}} % SECTION:
+\pan Obvious. \qed
+
+\subsection{Proof that isomorphism of modules is computed by equality of characters: \ref{trans:equivalence}} % SECTION:
+\pan Factorise $U \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus u_I}$ and $V \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus v_I}$. Then, $\chi_U = \sum_{I \in \Irred(G)} u_I \cdot \chi_I$ and $\chi_V = \sum_{I \in \Irred(G)} v_I \cdot \chi_I$. Since $\set*{ \chi_I \given I \in \Irred(G) }$ is linearly independent, we have $\chi_U = \chi_V$ just when $u_I = v_I$ for all $I$, which itself happens just when $U \simeq V$. \qed
+
+\subsection{Proof that dimension of hom space is computed by inner products of characters: \ref{trans:dimension-hom}} % SECTION:
+\pan Factorise $U \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus u_I}$ and $V \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus v_I}$. The rest of the proof is solved by applying universal properties of the direct sum, Schur's lemma, and orthonormality of irreducible characters. Specifically, observe that
+\begin{align*}
+  \dim \FinVect^G (U, V)
+  &= \sum_{I, J \in \Irred(G)} u_I \cdot v_J \cdot \dim \FinVect^G (I, J)
+  \\
+  &= \sum_{I, J \in \Irred(G)} u_I \cdot v_J \cdot \one_{I \simeq J}
+  \\
+  &= \sum_{I, J \in \Irred(G)} u_I \cdot v_J \cdot \langle \chi_I, \chi_J \rangle
+  \\
+  \dim \FinVect^G (U, V)
+  &= \langle \chi_U, \chi_V \rangle
+\end{align*}
+as desired. \qed
+
+\subsection{Proof that irreducibility is computed by inner products of characters: \ref{trans:irreducibility}} % SECTION:
+\pan Factorise $V \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus v_I}$. Then, by orthonormality of irreducible characters, $\langle \chi_V, \chi_V \rangle = \sum_{I \in \Irred(G)} v_I^2$. This is equal to $1$ if and only if precisely one $v_I$ is nonzero and takes value $v_I = 1$; this describes exactly when $V \simeq I$ is irreducible. \qed
+
+\subsection{Proof that appearance irreducible factors is computed by inner products of characters: \ref{trans:irreducible-factor}} % SECTION:
+\pan Factorise $V \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus v_I}$. Then,
+\begin{align*}
+  \langle \chi_I, \chi_V \rangle
+  &= \dim \FinVect^G (I, V)
+  \\
+  &= \sum_{J \in \Irred(G)} v_J \cdot \dim \FinVect^G (I, J)
+  \\
+  \langle \chi_I, \chi_V \rangle
+  &= v_I
+  ,
+\end{align*}
+as desired. \qed
+
+\subsection{Proof of Frobenius reciprocity: \ref{grammar:reciprocity}, \ref{trans:adjunction-induction-restriction}, \ref{trans:reciprocity}} % SECTION:
+\pan Fix $H \leq G$. The linear adjunction of $\ind_H^G$ to $\res^G_H$ can be verified at the level of class functions. Take coset representatives enumerating $G / H =: \set*{ x_{\alpha} H }_{\alpha \in \mathcal{A}}$. For $\varphi \in \mathbb{C}^{\Classes(H)}$, we have $\ind_H^G (\varphi) (h) := \sum_{\alpha \in \mathcal{A}} \hat{\varphi} (x_{\alpha}^{-1} h x_{\alpha})$, where $\hat{\varphi} (h) := \varphi(h)$ for $h \in H$ and $\hat{\varphi} (g) := 0$ for $g \in G \setminus H$. Now, for $\varphi \in \mathbb{C}^{\Classes(H)}$ and $\psi \in \mathbb{C}^{\Classes(G)}$, observe that
+\begin{align*}
+  \left\langle \ind_H^G \varphi, \psi \right\rangle_{G}
+  &= \frac{1}{\lvert G \rvert} \sum_{g \in G}
+    \sum_{\alpha \in \mathcal{A}} \hat{\varphi} (x_{\alpha}^{-1} g x_{\alpha})
+    \cdot \overline{\psi(g)}
+  \\
+  &= \frac{1}{\lvert G \rvert} \sum_{\alpha \in \mathcal{A}} \sum_{g \in G}
+    \hat{\varphi} (x_{\alpha}^{-1} g x_{\alpha})
+    \cdot \overline{\psi(g)}
+  \\
+  &= \frac{1}{\lvert G \rvert} \sum_{\alpha \in \mathcal{A}} \sum_{g' \in G}
+    \hat{\varphi} (g')
+    \cdot \overline{\psi(x_{\alpha} g' x_{\alpha}^{-1})}
+  \\
+  &= \frac{1}{\lvert G \rvert} \sum_{\alpha \in \mathcal{A}} \sum_{g \in G}
+    \hat{\varphi} (g)
+    \cdot \overline{\psi(g)}
+  \\
+  &= \frac{\lvert G / H \rvert}{\lvert G \rvert} \sum_{g \in G}
+    \hat{\varphi} (g)
+    \cdot \overline{\psi(g)}
+  \\
+  &= \frac{1}{\lvert H \rvert} \sum_{g \in G}
+    \hat{\varphi} (g)
+    \cdot \overline{\psi(g)}
+  \\
+  &= \frac{1}{\lvert H \rvert} \sum_{h \in H}
+    \varphi(h)
+    \cdot \overline{\psi(h)}
+  \\
+  \left\langle \ind_H^G \varphi, \psi \right\rangle_{G}
+  &= \langle \varphi, \res^G_H \psi \rangle_{H}
+\end{align*}
+as desired. Verifying the adjunction of functors $\Ind_H^G \dashv \Res^G_H$ is easy if you take the definition of induction to be $\Ind_H^G := \blank \otimes_{\mathbb{C}[H]} \mathbb{C}[G]$. We can view the category $\FinVect^G$ of $G$-modules as isomorphic to the category $\mathbb{C}[G]\text{-}\Mod$ of left $\mathbb{C}[G]$-modules\footnote{$\mathbb{C}[G]$ is a ring, though generically not a commutative one.}; in the latter category, $\Ind_H^G$ may be viewed as an extension of scalars. This provides the required adjunction $\Ind_H^G \dashv \Res^G_H$ when viewing $\Ind_H^G : \mathbb{C}[H]\text{-}\Mod \rightleftarrows \mathbb{C}[G]\text{-}\Mod : \Res^G_H$. We transport this along isomorphisms of categories to find our adjunction $\Ind_H^G \dashv \Res^G_H$ with $\Ind_H^G : \FinVect^H \rightleftarrows \FinVect^G : \Res^G_H$. If you take a different definition of induction (for example, the more computational one related to coset representatives), then the categorical adjunction is more tricky to verify. \textbf{We will not do so here.} \qed
+
+\subsection{Proof that kernels are kernels: \ref{trans:kernels}} % SECTION:
+\label{proof:kernels-are-kernels}
+\pan Let $n$ be the order of $g$. It is easy to show that $\Ker \rho_V \subseteq \Ker \chi_V$. For the reverse inclusion, fix $g \in \Ker \chi_V$, so that $\tr (\rho_V (g)) = \dim V$. The trace itself is a sum of eigenvalues $\lambda$ of $\rho_V (g)$; as $\rho_V (g)^n = 1_V$, we must have $\lambda^n = 1$ and so $\lvert \lambda \rvert = 1$. By the triangle inequality,
+\begin{align*}
+  \dim V
+  &= \left\lvert
+    \sum_{\lambda} \lambda
+    \right\rvert
+  \geq \sum_{\lambda} \lvert \lambda \rvert
+  = (\text{num. eigenvalues of } \rho_V (g))
+  = \dim V
+  .
+\end{align*}
+\par The equality forces each $\lambda$ to be $1$. Consulting a Jordan canonical form for the matrix $\rho_V (g)$ and imposing that $\rho_V (g)^n = 1_V$ on this matrix, we find that $\rho_V (g) = 1_V$. This shows that $g \in \Ker \rho_V$, so $\Ker \chi_V \subseteq \Ker \rho_V$. \qed
+
+\subsection{Proof that normal subgroups are intersections of irreducible kernels: \ref{trans:normal-subgroups}} % SECTION:
+\pan A normal subgroup $N \trianglelefteq G$ is the kernel of the map $G \to G / N$. Viewing $G / N$ as a subgroup of a permutation group, we get a map $G \to S_n$ with the same kernel, for sufficiently large $n \in \mathbb{Z}_{\geq 0}$. Extending linearly, we get a representation $G \to \GL \mathbb{C}^n$ with equal kernel. Factorise this representation into irreducible submodules $\bigoplus_{I \in \Irred(G)} I^{\oplus m_I}$. We are now asking for the kernel of a map $G \to \GL\left( \bigoplus_{I \in \Irred(G)} I^{\oplus m_I} \right)$, which is the same as the intersection of the kernels of maps $\rho_I : G \to \GL I$ for each $I \in \Irred(G)$ with $m_I \neq 0$. Each $\Ker \rho_I = \Ker \chi_I$ is the kernel of an irreducible character, so we have now written our subgroup as an intersection of kernels of irreducible characters. \qed
+
+\subsection{Proof that the commutation subgroup is the intersection of one-dimensional character kernels: \ref{trans:commutator}} % SECTION:
+\pan Let $\mathcal{L} \subseteq \Irred(G)$ denote the set of one-dimensional irreducible $G$-modules (rather, one for each isomorphism class). For each $I \in \mathcal{L}$, the endomorphisms of $I$ are multiplication by scalars, so $\rho_I$ has each element of $G$ act by scalars. Thus, for $g, h \in G$, $\rho_I$ carries $g h g^{-1} h^{-1}$ to the scalar $1$, and so $[G, G] \subseteq \Ker \rho_I = \Ker \chi_I$. As this held for each $I \in \mathcal{L}$, we have $[G, G] \subseteq \bigcap_{I \in \mathcal{L}} \Ker \chi_I$. It remains to prove the other inclusion.
+\par Our proof in subsection \ref{proof:kernels-are-kernels} gave a recipe to explicitly write any normal subgroup as an intersection of irreducible character kernels; we apply this recipe to the normal subgroup $[G, G]$. After combing through the details, we are after the intersection $\bigcap_{I \in \mathcal{K}} \Ker \chi_I$, where $\mathcal{K} \subseteq \Irred(G)$ is the set of irreducible submodules appearing in a factorisation of the left coset representation $G \to \GL \mathbb{C}[G / [G, G]]$. If we show that $\mathcal{K} \subseteq \mathcal{L}$, then $[G, G] = \bigcap_{I \in \mathcal{K}} \Ker \chi_I \supseteq \bigcap_{I \in \mathcal{L}} \Ker \chi_I \supseteq [G, G]$ and we will be done.
+\par Consider the set of operators $
+  \mathcal{G}
+  := \set*{
+    g \cdot \blank
+    : \mathbb{C}[G / [G, G]] \to \mathbb{C}[G / [G, G]]
+  \given
+    g \in G
+  }
+$. These operators permute the basis $G / [G, G]$ of $\mathbb{C}[G / [G, G]]$, so they are effectively permutation matrices and therefore they diagonalise. Furthermore, these operators commute; this is essentially because all elements commute in $G / [G, G]$, but let us check this more explicitly. Fix $g, h, x \in G$. Then, $h^{-1} g^{-1} h g \in [G, G]$, and normality grants us that $x^{-1} h^{-1} g^{-1} h g x \in [G, G]$ also. Thus,
+\begin{align*}
+  g \cdot h \cdot x [G, G]
+  &= g h x [G, G]
+  = g h x x^{-1} h^{-1} g^{-1} h g x [G, G]
+  = h g x [G, G]
+  = h \cdot g \cdot x [G, G]
+  .
+\end{align*}
+\par Varying $x$, we find that $g \cdot h \cdot \blank$ and $h \cdot g \cdot \blank$ agree on a basis for $\mathbb{C}[G / [G, G]]$, and therefore are equal functions. Thus, $\mathcal{G}$ is a set of commuting diagonalisable operators, and therefore it simultaneously diagonalises over some basis $\beta$ for $\mathbb{C}[G / [G, G]]$. Thanks to diagonalisation, $G$ acts by scalars on each element $b \in \beta$; thus, the spaces $\spans_{\mathbb{C}} \set*{ b }$ are each distinct, one-dimensional $G$-submodules which together span $\mathbb{C}[G / [G, G]]$. This is to say that left coset representation factorises into a direct sum of one-dimensional irreducible $G$-modules; i.e. $\mathcal{K} \subseteq \mathcal{L}$. \qed
+
+\subsection{Proof of how the left-regular representation factorises: \ref{result:kill-left-regular}} % SECTION:
+\pan The character of the left-regular representation is $\chi_{\mathbb{C}[G]} = (g \mapsto \lvert G \rvert \cdot \one_{g = 1_G})$. For each $I \in \Irred(G)$, the multiplicity of $I$ in $\mathbb{C}[G]$ is
+\begin{align*}
+  \langle \chi_I, \chi_{\mathbb{C}[G]} \rangle
+  &= \sum_{g \in G}
+    \chi_I (g)
+    \cdot \one_{g = 1_G}
+  = \chi_I (1_G)
+  = \dim I
+\end{align*}
+and so $\mathbb{C}[G] \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus \dim I}$. We next wish to count the dimension of the centre of the endomorphism algebra of $\mathbb{C}[G]$. On one hand, we have isomorphisms of algebras\footnote{Unital, associative $\mathbb{C}$-algebras.}
+\begin{align*}
+  Z\left(
+    \FinVect^G (\mathbb{C}[G], \mathbb{C}[G])
+  \right)
+  &\simeq_{\Alg} Z\left(
+    \bigoplus_{I \in \Irred(G)}
+      \Mat_{\dim I \times \dim I} (\mathbb{C})
+  \right)
+  \simeq_{\Alg} \bigoplus_{I \in \Irred(G)} \mathbb{C}
+\end{align*}
+that we trust the reader\footnote{Lazy.} to construct explicitly, so $
+  \lvert \Irred(G) \rvert
+  = \dim Z\left(
+    \FinVect^G (
+      \mathbb{C}[G]
+    , \mathbb{C}[G]
+    )
+  \right)
+$. For another count, we explicitly consult the structure of $\mathbb{C}[G]$. An element $f \in \FinVect^G (\mathbb{C}[G], \mathbb{C}[G])$ is completely determined by the value $f(1_G)$, because $G$-linearity specifies that $f(g) = g f(1_G)$ for $g \in G$, and $G$ forms a basis for $\mathbb{C}[G]$. Therefore, $f \mapsto f(1_G)$ is an isomorphism of vector spaces $\FinVect^G (\mathbb{C}[G], \mathbb{C}[G]) \simeq_{\Vect} \mathbb{C}[G]$. It is actually an \textit{anti}-isomorphism\footnote{I.e. swaps the order of multiplication.} of algebras because $k \circ f \mapsto k(f(1_G)) = f(1_G) k(1_G)$; fortunately, this is still enough to conclude an isomorphism\footnote{Isomorphism of algebras, though right now all we need is an isomorphism of vector spaces} $
+  Z\left(
+    \FinVect^G (\mathbb{C}[G], \mathbb{C}[G])
+  \right)
+  \simeq_{\Vect} Z\left( \mathbb{C}[G] \right)
+$.
+\par We will be done if we count $\dim Z(\mathbb{C}[G]) = \lvert \Classes(G) \rvert$. Consider the set
+\begin{align*}
+  \beta
+  &:= \set*{
+    \sum_{h \in \Class(g)} h
+  \given
+    \Class(g) \in \Classes(G)
+  }
+  .
+\end{align*}
+\par It is easy to verify that the elements listed in $\beta$ corresponding to distinct conjugacy classes are actually distinct and lie in $Z(\mathbb{C}[G])$; that is, $\beta$ is linearly independent. It is also a spanning set, for given $z = \sum_{g \in G} z_g g \in Z(\mathbb{C}[G])$, we have
+\begin{align*}
+  z
+  &= \sum_{\Class(g) \in \Classes(G)}
+    z_g
+    \sum_{h \in \Class(g)} h
+  .
+\end{align*}
+\par Therefore, $\beta$ is a basis and we conclude that $\lvert \Irred(G) \rvert = \dim Z(\mathbb{C}[G]) = \lvert \Classes(G) \rvert$. \qed
+
+\subsection{Proof that dimensions of irreducible modules divide order of group: \ref{grammar:dimensions-divide-order}} % SECTION:
+\pan Fix\footnote{This proof is the ``variant on the second proof'' given \href{https://math.stackexchange.com/a/249328}{by David E Speyer at StackExchange}.} $I \in \Irred(G)$. Our goal is to show that $\lvert G \rvert / {\dim I}$ is an integer. Terms like these (especially division by $\dim I$) are reminiscent of character computations; let us make the connection more apparent by exploiting an ``averaging trick''. For ease of notation, let
+\begin{align*}
+  P (g)
+  &:= \sum_{h \in \Class(g)} h
+  ,
+  & R
+  &:= \sum_{i = 1}^{k}
+    \frac{\lvert G \rvert}{\lvert \Class(c_i) \rvert}
+    P(c_i) P(c_i^{-1})
+\end{align*}
+where $g \in G$ and $\set*{\Class(c_1), \dots, \Class(c_k)}$ is an enumeration $\Classes(G)$, so that $P(g)$ and $R$ are elements of the group algebra $\mathbb{C}[G]$. Extend the function $\rho_I : G \to \GL I$ linearly to a function $\rho_I : \mathbb{C}[G] \to \FinVect(I, I)$; then, $\rho_I (P(g))$ and $\rho_I (R)$ are linear transformations $I \to I$. It is easy to verify that each $P(g)$ is in the centre of $\mathbb{C}[G]$, so $\rho_I (P(g))$ is $G$-linear. Schur's lemma then asserts that $\rho_I (P(g))$ must be a scalar multiple of the identity. Taking the trace reveals that
+\begin{align*}
+  \rho_I (P(g))
+  &= \frac{\lvert \Class(g) \rvert \cdot \chi_I (g)}{\dim I} \cdot 1_I
+\end{align*}
+and we can apply this to find that
+\begin{align*}
+  \rho_I (R)
+  &= \sum_{i = 1}^{k}
+    \frac{\lvert G \rvert}{\lvert \Class(c_i) \rvert}
+    \cdot \frac{\lvert \Class(c_i) \rvert \cdot \chi_I (c_i)}{\dim I}
+    \cdot \frac{\lvert \Class(c_i^{-1}) \rvert \cdot \chi_I (c_i^{-1})}{\dim I}
+    \cdot 1_I
+  \\
+  &= \frac{\lvert G \rvert^2}{(\dim I)^2}
+  \cdot \frac{1}{\lvert G \rvert} \sum_{i = 1}^{k}
+    \lvert \Class(c_i^{-1}) \rvert \chi_I (c_i^{-1}) \chi_I (c_i)
+    \cdot 1_I
+  \\
+  &= \frac{\lvert G \rvert^2}{(\dim I)^2}
+  \cdot \frac{1}{\lvert G \rvert} \sum_{g \in G}
+    \chi_I (g^{-1}) \chi_I (g)
+    \cdot 1_I
+  \\
+  &= \frac{\lvert G \rvert^2}{(\dim I)^2}
+  \cdot \langle \chi_I, \chi_I \rangle
+  \cdot 1_I
+  \\
+  \rho_I (R)
+  &= \frac{\lvert G \rvert^2}{(\dim I)^2}
+  \cdot 1_I
+  .
+\end{align*}
+\par Consider now the multiplication $R \cdot \blank : \mathbb{C}[G] \to \mathbb{C}[G]$. Because
+\begin{align*}
+  R
+  &= \sum_{i = 1}^{k} \sum_{g \in \Class(c_i)} \sum_{h \in \Class(c_i^{-1})}
+    \lvert \Centraliser(c_i) \rvert
+    g h
+  ,
+\end{align*}
+it is clear that its matrix representation (with respect to the basis $G$ of $\mathbb{C}[G]$) contains only integer entries. Its characteristic polynomial $f(\lambda)$ thus lies in $\mathbb{Z}[\lambda]$. Now, if we restrict $R \cdot \blank$ to any factor of $I$ in the factorisation $\mathbb{C}[G] \simeq \bigoplus_{J \in \Irred(G)} J^{\oplus \dim J}$, it acts as $\rho_I (R)$ does. Our earlier calculation shows that $\rho_I (R)$ acts as the scalar $
+  \left( \lvert G \rvert / {\dim I} \right)^2
+$, and thus this scalar is an eigenvalue of $R \cdot \blank$. It is hence a root of the monic integer polynomial $f$; applying the rational root theorem, we conclude that $\lvert G \rvert / {\dim I}$ is an integer. \qed

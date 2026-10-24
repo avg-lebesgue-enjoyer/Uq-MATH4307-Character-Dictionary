@@ -22,7 +22,7 @@
     \pan Beware -- although the row for $\chi_I$ encodes the character $\chi_I$, it is missing information on the size of the conjugacy class. This information is critical to computing the inner product of two characters \ref{def:inner-product-functions}; generically, the inner product \textbf{does not} agree with the ``dot product''.
   }
   \item\label{def:class-function} {
-    \attentiveh{Class function}: A function $G \to A$ which is constant on conjugacy classes of $G$. $A$ is typically $\mathbb{C}$.
+    \attentiveh{Class function}: A function $G \to A$ which is constant on conjugacy classes of $G$. $A$ is typically $\mathbb{C}$. These form a vector space $\mathbb{C}^{\Classes(G)}$.
   }
   \item\label{def:kernel} {
     \attentiveh{Kernel} of the character $\chi_V$: The normal subgroup $\set*{ g \in G \given \chi_V (g) = \chi_V (1) }$. More details at \ref{trans:normal-subgroups}.
@@ -38,7 +38,7 @@
       \langle \chi_U, \chi_V \rangle
       &:= \frac{1}{\lvert G \rvert} \sum_{g \in G} \chi_U (g) \cdot \chi_V (g^{-1})
     \end{align*}
-    because of \ref{grammar:inverses}.
+    because of \ref{grammar:inverses}. Restricting to the linear subspace $\mathbb{C}^{\Classes(G)}$ gives an inner product on the class functions.
   }
 \end{enumerate}
 
@@ -79,29 +79,27 @@
       .
     \end{align*}
   }
-  \item\label{grammar:dimensions-divide-index-centre} {
-    \attentiveh{Dimensions/degrees of irreducibles divide centre indices}:
+  \item\label{grammar:dimensions-divide-order} {
+    \attentiveh{Dimensions/degrees of irreducibles divide order of group}:
+    \pan For $I \in \Irred(G)$,
     \begin{align*}
-      \dim(V)
-      &= \chi_V (1)
-      \mid [G : Z(G)]
+      \dim(I)
+      &= \chi_I (1_G)
+      \mid \lvert G \rvert
       .
     \end{align*}
-  }
+    }
   \item\label{grammar:inverses} {
     \attentiveh{Inverses}: For $g \in G$, $\chi_V (g^{-1}) = \overline{\chi_V (g)}$.
-  }
-  \item\label{grammar:kernels-normal} {
-    \attentiveh{Kernels are normal}: $\Ker \chi_V$ is a normal subgroup of $G$.
   }
   \item\label{grammar:reciprocity} {
     \attentiveh{Frobenius reciprocity}: If $H \leq G$, $U : \FinVect^H$ and $V : \FinVect^G$, then
     \begin{align*}
-      \langle \Ind_H^G U , V \rangle
-      &= \langle U, \Res^G_H V \rangle
+      \langle \ind_H^G \chi_U , V \rangle
+      &= \langle U, \res^G_H \chi_V \rangle
       .
     \end{align*}
-    See \ref{trans:adjunction-induction-restriction}.
+    See \ref{trans:adjunction-induction-restriction} and \ref{result:frobenius-reciprocity}.
   }
   \item\label{grammar:orthonormality-irreducibles} {
     \attentiveh{Orthonormality of irreducibles}:
@@ -131,15 +129,18 @@
     \begin{align*}
       \FinVect^G(\Ind_H^G U, V)
       &\simeq_{\text{nat.} U, V} \FinVect^H (U, \Res^G_H V)
-      \quad\rightsquigarrow\quad
-      \langle \Ind_H^G U , V \rangle
-      = \langle U, \Res^G_H V \rangle
+      \;\rightsquigarrow\;
+      \langle \ind_H^G \chi_U , \chi_V \rangle
+      = \langle \chi_U, \res^G_H \chi_V \rangle
       .
     \end{align*}
-    \pan The inner product relation is a decategorification of the (categorical) adjunction.
+    \pan Here, $\ind_H^G \chi_U := \chi_{\Ind_H^G U}$ and $\res^G_H \chi_V := \chi_{\Res^G_H \chi_V}$; extending linearly, $\ind_H^G$ and $\res^G_H$ define linear maps $\ind_H^G : \mathbb{C}^{\Classes(H)} \rightleftarrows \mathbb{C}^{\Classes(G)} : \res^G_H$. The inner product relation is a decategorification of the (categorical) adjunction.
+  }
+  \item\label{trans:class-number} {
+    \attentiveh{Class number}: The number of conjugacy classes of $G$ is the same as $\lvert \Irred(G) \rvert$.
   }
   \item\label{trans:commutator} {
-    \attentiveh{Commutator}: The commutator subgroup $[G, G]$ is the intersection of all one-dimensional characters.
+    \attentiveh{Commutator subgroup}: The commutator subgroup $[G, G]$ is the intersection of all one-dimensional characters.
     \begin{align*}
       [G, G]
       &= \bigcap_{I \in \Irred(G) . \dim I = 1}
@@ -151,7 +152,7 @@
     \attentiveh{Dimension/Degree} of $V$:
     \begin{align*}
       \dim(V)
-      &= \chi_V (1)
+      &= \chi_V (1_G)
       .
     \end{align*}
   }
@@ -160,6 +161,14 @@
     \begin{align*}
       \dim \FinVect^G (U, V)
       &= \langle \chi_U, \chi_V \rangle
+      .
+    \end{align*}
+  }
+  \item\label{trans:direct-sum} {
+    \attentiveh{Direct sums}: Characters of direct sums are sums of characters; i.e.
+    \begin{align*}
+      \chi_{U \oplus V}
+      &= \chi_U + \chi_V
       .
     \end{align*}
   }
@@ -185,6 +194,18 @@
       .
     \end{align*}
   }
+  \item\label{trans:reciprocity} {
+    \attentiveh{Frobenius reciprocity}: See \ref{trans:adjunction-induction-restriction}.
+  }
+  \item\label{trans:kernels} {
+    \attentiveh{Kernels are kernels}: The kernel of $V$'s character and its representation agree; that is,
+    \begin{align*}
+      \Ker \chi_I
+      &= \Ker \rho_I
+      .
+    \end{align*}
+    \pan \ignore{(In the above, we mean the kernel of the group homomorphism $\rho_I$, \textit{not} the kernel of the linear map which extends $\rho_I$ to a function $\mathbb{C}[G] \to \FinVect(V, V)$.)}
+  }
   \item\label{trans:normal-subgroups} {
     \attentiveh{Normal subgroups}: For $N \subseteq G$,
     \begin{align*}
@@ -194,17 +215,22 @@
       .
     \end{align*}
   }
-  \item\label{trans:reciprocity} {
-    \attentiveh{Frobenius reciprocity}: See \ref{trans:adjunction-induction-restriction}.
-  }
   \item\label{trans:irreducible-factor} {
-    \attentiveh{Irreducible factors}: For $U$ irreducible,
+    \attentiveh{Irreducible factors}: For $I$ irreducible,
     \begin{align*}
-      \text{a factor of } U \text{ appears in } V
-      &\iff \langle \chi_U, \chi_V \rangle \neq 0
+      \text{a factor of } I \text{ appears in } V
+      &\iff \langle \chi_I, \chi_V \rangle \neq 0
       .
     \end{align*}
-    \ignore{(A factor ``appearing'' means that $V \simeq U \oplus (\text{stuff})$.)}
+    \pan Furthermore, this expression counts the multiplicity of $I$ in $V$:
+    \begin{align*}
+      V
+      \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus m_I}
+      \quad\rightsquigarrow\quad
+      \langle \chi_I, \chi_V \rangle
+      = m_j
+    \end{align*}
+    \ignore{(A factor ``appearing'' means that $V \simeq I \oplus (\text{stuff})$.)}
   }
   \item\label{trans:irreducibility} {
     \attentiveh{Irreducibility}: See also \ref{grammar:orthonormality-irreducibles}.

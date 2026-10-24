@@ -1,2 +1,129 @@
 \section{Some Character Tables} \label{sec:tables} % SECTION:
-\pan Here are some character tables. \FIXME{Actually do it}
+
+\subsection{Baby examples} % SECTION:
+\pan Trivial group $S_1 \simeq \mathbb{Z}_{/1}$:
+\begin{align*}
+  \begin{tabular}{c|cc}
+    $S_1$ & $()$ \\
+    \hline
+    $\chi_{\text{trivial}}$ & $1$ \\
+  \end{tabular}
+\end{align*}
+\pan Order two group $S_2 \simeq \mathbb{Z}_{/2}$:
+\begin{align*}
+  \begin{tabular}{c|cc}
+    $S_2$ & $()$ & $({*}{*})$ \\
+    \hline
+    $\chi_{\text{trivial}}$ & $1$ & $1$ \\
+    $\chi_{\text{sign}}$ & $1$ & $-1$ \\
+  \end{tabular}
+\end{align*}
+\pan Order three group $\mathbb{Z}_{/3}$:
+\begin{align*}
+  \begin{tabular}{c|ccc}
+    $\mathbb{Z}_{/3}$ & $0$ & $1$ & $2$ \\
+    \hline
+    $\chi_{0}$ & $1$ & $1$ & $1$ \\
+    $\chi_{1}$ & $1$ & $e^{2\pi i/3}$ & $e^{- 2\pi i/3}$ \\
+    $\chi_{2}$ & $1$ & $e^{- 2\pi i/3}$ & $e^{2\pi i/3}$ \\
+  \end{tabular}
+\end{align*}
+\pan Order four groups:
+\begin{align*}
+  & \begin{tabular}{c|cccc}
+    $\mathbb{Z}_{/4}$ & $0$ & $1$ & $2$ & $3$ \\
+    \hline
+    $\chi_{0}$ & $1$ & $1$ & $1$ & $1$ \\
+    $\chi_{1}$ & $1$ & $i$ & $-1$ & $-i$ \\
+    $\chi_{2}$ & $1$ & $-1$ & $1$ & $-1$ \\
+    $\chi_{3}$ & $1$ & $-i$ & $-1$ & $i$ \\
+  \end{tabular}
+  && \begin{tabular}{c|cccc}
+    $\mathbb{Z}_{/2} \times \mathbb{Z}_{/2}$ & $00$ & $01$ & $10$ & $11$ \\
+    \hline
+    $\chi_{00}$ & $1$ & $1$   & $1$ & $1$ \\
+    $\chi_{01}$ & $1$ & $-1$  & $1$ & $-1$ \\
+    $\chi_{10}$ & $1$ & $1$   & $-1$ & $-1$ \\
+    $\chi_{11}$ & $1$ & $-1$  & $-1$ & $1$ \\
+  \end{tabular}
+\end{align*}
+\pan Order five group $\mathbb{Z}_{/5}$; here, $\omega$ is a primitive fifth root of unity:
+\begin{align*}
+  & \begin{tabular}{c|ccccc}
+    $\mathbb{Z}_{/5}$ & $0$ & $1$ & $2$ & $3$ & $4$ \\
+    \hline
+    $\chi_{0}$ & $1$ & $1$ & $1$ & $1$ & $1$ \\
+    $\chi_{1}$ & $1$ & $\omega$ & $\omega^2$ & $\omega^3$ & $\omega^4$ \\
+    $\chi_{2}$ & $1$ & $\omega^2$ & $\omega^4$ & $\omega$ & $\omega^3$ \\
+    $\chi_{3}$ & $1$ & $\omega^3$ & $\omega$ & $\omega^4$ & $\omega^2$ \\
+    $\chi_{4}$ & $1$ & $\omega^4$ & $\omega^3$ & $\omega^2$ & $\omega$ \\
+  \end{tabular}
+\end{align*}
+\pan Order six groups $\mathbb{Z}_{/6}$ and $S_3 \simeq D_3$; here, $\omega$ is a primitive sixth root of unity:
+\begin{align*}
+  & \begin{tabular}{c|cccccc}
+    $\mathbb{Z}_{/6}$ & $0$ & $1$ & $2$ & $3$ & $4$ & $5$ \\
+    \hline
+    $\chi_{0}$ & $1$ & $1$ & $1$ & $1$ & $1$ & $1$ \\
+    $\chi_{1}$ & $1$ & $\omega$ & $\omega^2$ & $\omega^3$ & $\omega^4$ & $\omega^5$ \\
+    $\chi_{2}$ & $1$ & $\omega^2$ & $\omega^4$ & $1$ & $\omega^2$ & $\omega^4$ \\
+    $\chi_{3}$ & $1$ & $-1$ & $1$ & $-1$ & $1$ & $-1$ \\
+    $\chi_{4}$ & $1$ & $\omega^4$ & $\omega^2$ & $1$ & $\omega^4$ & $\omega^2$ \\
+    $\chi_{5}$ & $1$ & $\omega^5$ & $\omega^4$ & $\omega^3$ & $\omega^2$ & $\omega$ \\
+  \end{tabular}
+  & \begin{tabular}{c|cccccc}
+    $S_3$ & $()$ & $({*}{*})$ & $({*}{*}{*})$ \\
+    \hline
+    $\chi_{(3)}$ & $1$ & $1$ & $1$ \\
+    $\chi_{(2, 1)}$ & $2$ & $0$ & $-1$ \\
+    $\chi_{(1, 1, 1)}$ & $1$ & $-1$ & $1$ \\
+  \end{tabular}
+\end{align*}
+\pan Order seven group $\mathbb{Z}_{/7}$; here, $\omega$ is a primitive seventh root of unity:
+\begin{align*}
+  & \begin{tabular}{c|ccccccc}
+    $\mathbb{Z}_{/7}$ & $0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ \\
+    \hline
+    $\chi_{0}$ & $1$ & $1$ & $1$ & $1$ & $1$ & $1$ & $1$ \\
+    $\chi_{1}$ & $1$ & $\omega$ & $\omega^2$ & $\omega^3$ & $\omega^4$ & $\omega^5$ & $\omega^6$ \\
+    $\chi_{2}$ & $1$ & $\omega^2$ & $\omega^4$ & $\omega^6$ & $\omega^1$ & $\omega^3$ & $\omega^5$ \\
+    $\chi_{3}$ & $1$ & $\omega^3$ & $\omega^6$ & $\omega^2$ & $\omega^5$ & $\omega^1$ & $\omega^4$ \\
+    $\chi_{4}$ & $1$ & $\omega^4$ & $\omega^1$ & $\omega^5$ & $\omega^2$ & $\omega^6$ & $\omega^3$ \\
+    $\chi_{5}$ & $1$ & $\omega^5$ & $\omega^3$ & $\omega^1$ & $\omega^6$ & $\omega^4$ & $\omega^2$ \\
+    $\chi_{6}$ & $1$ & $\omega^6$ & $\omega^5$ & $\omega^4$ & $\omega^3$ & $\omega^2$ & $\omega^1$ \\
+  \end{tabular}
+\end{align*}
+
+\subsection{Quaternion group} % SECTION:
+\pan \FIXME{I have no idea how to start this one!}
+
+\subsection{Abelian groups} % SECTION:
+\pan The character tables of the cyclic groups are easy to describe. Fix $n \in \mathbb{Z}_{> 0}$ and let $\omega$ be a primitive $n$th root of unity. There is one irreducible character $\chi_x$ for each element $x \in \mathbb{Z}_{/n}$, and its values are $\chi_x (y) = \omega^{x y}$. So, the character table is
+\begin{align*}
+  & \begin{tabular}{c|ccccc}
+    $\mathbb{Z}_{/n}$ & $0$ & $1$ & $2$ & $\cdots$ & $n - 1$ \\
+    \hline
+    $\chi_{0}$ & $1$ & $1$ & $1$ & $\cdots$ & $1$ \\
+    $\chi_{1}$ & $1$ & $\omega$ & $\omega^2$ & $\cdots$ & $\omega^{n - 1}$ \\
+    $\chi_{2}$ & $1$ & $\omega^2$ & $\omega^4$ & $\cdots$ & $\omega^{n - 2}$ \\
+    $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
+    $\chi_{n - 1}$ & $1$ & $\omega^{n - 1}$ & $\omega^{n - 2}$ & $\cdots$ & $\omega^1$ \\
+  \end{tabular}
+\end{align*}
+\par The irreducible representations are also easy to describe. They are exactly the characters above; think of the scalars as scaling the identity map on $\mathbb{C}$.
+\par Consider now a product $\mathbb{Z}_{/n_1} \times \cdots \times \mathbb{Z}_{/ n_k}$ of cyclic groups. Let $\omega_j$ be a primitive $n_j$th root of unity for each $j \in \set*{1, \dots, k}$. There is one irreducible character for each element $(x_1, \dots, x_k) \in \mathbb{Z}_{/ n_1} \times \cdots \times \mathbb{Z}_{/ n_k}$, and it is given by
+\begin{align*}
+  \chi_{x_1, \dots, x_k} (y_1, \dots, y_k)
+  &= \omega_1^{x_1 y_1} \cdots \omega_k^{x_k y_k}
+  .
+\end{align*}
+\par Again, the irreducible representations themselves are exactly the irreducible characters.
+
+\subsection{Dihedral groups} % SECTION:
+\pan The dihedral group $D_n$ is the graph automorphism group of the $n$-cycle. The graph's eigenspaces provide many irreducible representations of $D_n$. If we present $D_n = \langle r, s \;\vert\; r^n = s^2 = 1 \text{ and } s r s = r^{-1} \rangle$, then the eigenspaces provide every irreducible representation except for the ``partners'' of the one-dimensional representations. If $n$ is odd, then an eigenspace provides the trivial representation; multiplying by the one-dimensional ``sign of $s$'' representation $r \mapsto 1, s \mapsto -1$ gives the missing partner. If $n$ is even, then we still need this partner to the trivial representation, but we also need a partner to the ``half-way around / sign of $r$'' representation $r \mapsto -1, s \mapsto 1$; this partner is obtained in the same way, and it is $r \mapsto -1, s \mapsto -1$. \FIXME{I'm currently way too lazy to do it, but I really should include some pictures of these irreps and give a few ($n \in \set*{3, 4, 5, 6}$) character tables explicitly; they're quite beautiful.}
+
+\subsection{Symmetric groups} % SECTION:
+\pan The irreducible representations of the symmetric groups are the Specht modules. \FIXME{I should include a few small character tables and a note about the calculation methods; way too lazy right now lol (look at the timestamp on this git commit).}
+
+\subsection{Alternating groups} % SECTION:
+\pan \FIXME{I actually have no idea where to start with these}

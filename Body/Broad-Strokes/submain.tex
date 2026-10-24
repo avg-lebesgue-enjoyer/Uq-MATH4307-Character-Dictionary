@@ -58,7 +58,7 @@
 
 \skoop
 \subsection{Prologue: The Birth of Characters} % SECTION:
-\par We now tell a fiction on the story of character theory, all in broad strokes. Once upon a time, vector spaces were decategorified by their dimension, and everyone lived happily ever after. Well, they lived up until algebraists decided to represent symmetries on vector spaces, moving us from the land $\FinVect$ to the various lands $\FinVect^G$ (for $G : \FinGroup$). In early and tumultuous days, many discoveries were made paralleling the story for vector spaces:
+\par We now tell a fiction on the story of character theory, all in broad strokes. Long ago, vector spaces were decategorified by their dimension and lived together in harmony. Then, everything changed when algebraists constructed group representations. Only decategorification could tame these, but it vanished. A hundred years passed\footnote{Not at all. This is a fiction.} and all that was known were some parallels:
 \begin{align*}
   \begin{tabular}{l|cc}
     & Vector spaces & Modules \\
@@ -76,7 +76,7 @@
       & direct sum.
   \end{tabular}
 \end{align*}
-\par After these initial algebraic gains, however, lingered important questions -- ``How many irreducible modules are there?'', or ``Where can we find these modules?'', for example. To gain further ground, the category $\FinVect^G$ needed to be quite seriously tamed. After dusting off the history books, the algebraists attempted to decategorify $\FinVect^G$ by mirroring the dimension decategorification of $\FinVect$. Fortunately, in the context of a group representation, the dimension appears naturally:
+\par The algebraists believed that they could save the world, and attempted to decategorify the category of $G$-modules $\FinVect^G$ by mirroring the dimension decategorification of $\FinVect$. Fortunately, in the context of a group representation, the dimension appears naturally:
 \begin{align*}
   G \xrightarrow{\rho_V} \GL(V)
   \quad\rightsquigarrow\quad
@@ -96,11 +96,27 @@
   = \tr (\rho_V (1_G))
   .
 \end{align*}
-\par This is a natural choice because the representing linear transformations $\rho_V (g), g \in G$ are the only extra data present within objects of $\FinVect^G$, and the only such transformation guaranteed to exist is $\rho_V (1_G) = 1_V$. The generalisation easily revealed itself -- the \textbf{character} of $V$ is the function $\chi_V : G \to \mathbb{C}$ given by $\chi_V := \tr \circ \rho_V$. The miracle is that this successfully decategorified away enough complexity to make tractable progress in understanding the category $\FinVect^G$.
+\par This is a natural choice because the representing linear transformations $\rho_V (g), g \in G$ are the only extra data present within objects of $\FinVect^G$, and the only such transformation guaranteed to exist is $\rho_V (1_G) = 1_V$. The generalisation easily reveals itself -- the \textbf{character} of $V$ is the function $\chi_V : G \to \mathbb{C}$ given by $\chi_V := \tr \circ \rho_V$. The miracle is that this successfully decategorifies away enough complexity to make tractable progress in understanding the category $\FinVect^G$.
+\par Let us demystify this miracle somewhat. For irreducible $I : \FinVect^G$, Schur's lemma provides us with an isomorphism
+\begin{align*}
+  \mathbb{C} &\simeq_{\Vect} \FinVect^G (I, I)
+  ,
+  & \lambda &\mapsto \lambda \cdot 1_I
+  .
+\end{align*}
+\par However, given $f \in \FinVect^G (I, I)$ and the promise that $f = \lambda \cdot 1_I$, there is a question of how to find $\lambda$. An obvious answer is to evaluate $f(x) = \lambda x$ for a nonzero vector $x \in I$, but this makes for an unnatural choice. A more symmetric option, though it requires accounting for $\dim I$, is to take the trace:
+\begin{align*}
+  \FinVect^G (I, I)
+  &\simeq_{\Vect} \mathbb{C}
+  ,
+  & f = \lambda \cdot 1_I &\mapsto \tr(f) = \lambda \cdot \dim I
+  .
+\end{align*}
+\par That is to say, the trace completely characterises endomorphisms of irreducible modules. Schur's lemma also tells us that the homomorphisms between inequivalent irreducible modules are all zero, so it is fair to say that the trace completely characterises all morphisms between irreducible modules. We now turn to painting this connection more clearly.
 
 \skoop
 \subsection{Chapter One: Separating Modules with Inner Products} % SECTION:
-\par The preceding text is best understood as a prologue to our story -- ``Chapter $0$'', if you will. In chapter one, we begin to understand the hom-spaces $\FinVect^G (U, V)$ for $U, V : \FinVect^G$. Every part of our story takes place over the category of vector spaces, so it is not a surprise to find that $\FinVect^G (U, V)$ is a vector space. Recording its dimension would be a first feat, and no easy one at that. In perhaps a stroke of luck, or perhaps by arcane insight dug up from historical texts\footnote{The \textit{Module-Wrestler Online Character Dictionary} keeps no good record of history.}, one can find some inspiration in a superficial\footnote{Part of the superficiality is not adequately keeping track of the opposite category.} look at $\FinVect^G(\blank, \blank)$:
+\par The preceding text is best understood as a prologue to our story -- ``Chapter $0$'', if you will. In chapter one, we begin to understand the hom-spaces $\FinVect^G (U, V)$ for $U, V : \FinVect^G$. Every part of our story takes place over the category of vector spaces, so it is not a surprise to find that $\FinVect^G (U, V)$ is a vector space. Recording its dimension would be a first feat. In perhaps a stroke of luck, or perhaps by arcane insight dug up from historical texts\footnote{The \textit{Module-Wrestler Online Character Dictionary} keeps no good record of history.}, one can find some inspiration in a superficial\footnote{Part of the superficiality is not adequately keeping track of the opposite category.} look at $\FinVect^G(\blank, \blank)$:
 \begin{align*}
   \begin{tikzcd}[ampersand replacement = \;, row sep = tiny]
     \text{Categorified} \arrow[dddd, "\text{character}"']
@@ -141,12 +157,12 @@
   \frac{1}{\lvert G \rvert} \sum_{g \in G} \phi(g) \cdot \overline{\psi(g)}
   .
 \end{align*}
-\par The division by $\lvert G \rvert$ may be seen as a normalisation factor; this had proven useful to the algebraists prior. The miracle of chapter one is that \textit{this inner product idea worked} and gave rise to a rich theory, eventually giving the dimension formula
+\par The division by $\lvert G \rvert$ may be seen as a normalisation factor; this had proven extremely useful earlier. The miracle of chapter one is that \textit{this inner product idea works} and gives rise to a rich theory, eventually resulting in the dimension formula
 \begin{align*}
   \dim \FinVect^G (U, V)
   &= \langle \chi_U, \chi_V \rangle
 \end{align*}
-and answering some of the lingering questions prior. How these results follow is not immediate, and will take us another chapter to describe.
+and a mechanism to approach other questions in representation theory. How these results follow is not immediate, and will take us another chapter to describe.
 
 \subsection{Chapter Two: Orthonormality of Irreducible Characters} % SECTION:
 \par A first observation is that
@@ -172,7 +188,7 @@ and answering some of the lingering questions prior. How these results follow is
   = 0
   ,
 \end{align*}
-which is to say in other words that if we enumerate the characters as $\chi_I$, one for each isomorphism class of irreducible modules $I : \FinVect^G$, then these characters are orthonormal. Sure enough,
+which is to say in other words that the irreducible characters $\set*{ \chi_I \given I \in \Irred(G) }$ are orthonormal. To explain the notation, $\Irred(G)$ is a set recording one irreducible $G$-module from each isomorphism class \ignore{(ignore size issues; they can be fixed)}. Sure enough,
 \begin{proposition}[Orthonormality of irreducible characters]
 \label{result:orthogonality}
   \pan For irreducible modules $I, J : \FinVect^G$,
@@ -183,7 +199,7 @@ which is to say in other words that if we enumerate the characters as $\chi_I$, 
   \end{align*}
   with the $\one$ denoting an indicator function. \ignore{(Perhaps think of the Kronecker delta.)}
 \end{proposition}
-\par Now, let us collect together one irreducible $G$-module from each isomorphism class into a set $\Irred(G)$ \ignore{(ignore size issues; they can be fixed)} and write two direct sum decompositions $U \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus u_I}$ and $V \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus v_I}$. Considering the universal properties of the direct sum, Schur's lemma tells us that
+\par Now, write two direct sum decompositions $U \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus u_I}$ and $V \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus v_I}$. Considering the universal properties of the direct sum, Schur's lemma tells us that
 \begin{align*}
   \FinVect^G (U, V)
   &\simeq \bigoplus_{I, J \in \Irred(G)} \FinVect^G (I, J)^{\oplus u_I v_J}
@@ -217,7 +233,7 @@ and therefore,
     .
   \end{align*}
 \end{theorem}
-\par What we have seen also gives us a strategy to extract from a character $\chi_V = \sum_{i \in \Irred(G)} a_i \cdot \chi_{V_i}$ the coefficients $a_i \in \mathbb{Z}_{\geq 0}$ declaring the ``multiplicities'' in the direct sum $V \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus a_I}$ of irreducible modules. One can either leverage orthonormality of the irreducible characters (to extract the coefficients straight away), or leverage the fact that $a_i = \dim \FinVect^G (I, V)$ \ignore{(which is not hard to prove)}. Either way,
+\par What we have seen also gives us a strategy to extract from a character $\chi_V = \sum_{I \in \Irred(G)} v_I \cdot \chi_{I}$ the coefficients $v_I \in \mathbb{Z}_{\geq 0}$ recording the ``multiplicities'' in the direct sum $V \simeq \bigoplus_{I \in \Irred(G)} I^{\oplus v_I}$ of irreducible modules. One can either leverage orthonormality of the irreducible characters (to extract the coefficients straight away), or leverage the fact that $v_I = \dim \FinVect^G (I, V)$ \ignore{(which is not hard to prove)}. Either way,
 \begin{theorem}[Irreducible characters give an orthonormal basis for all characters]
 \label{result:irreducible-basis}
   \pan Just as the irreducible submodules give a ``direct sum basis'' for the finite-dimensional complex $G$-modules up to isomorphism, the irreducible characters give a ``$\mathbb{Z}_{\geq 0}$-weighted basis'' for their characters. That is, we have a correspondence
@@ -235,7 +251,7 @@ and therefore,
   \end{align*}
   % where $\Irred(G)$ collects each isomorphism class of irreducible $G$-modules. \ignore{(Ignore, for now, the worry that constructing $\Irred(G)$ may seem to ask for a choice function over proper classes. We will later provide a recipe in the language of group representations ot construct $\Irred(G)$.)}
 \end{theorem}
-\pan Read the right way, the previous result entails that
+\pan Read the right way, the previous result entails
 \begin{theorem}[Equality of characters decategorifies equivalence of modules]
 \label{result:character-equality-decategorifies}
   \pan For $U, V : \FinVect^G$, we have
@@ -258,7 +274,7 @@ and therefore,
 \pan We can now conclude that $\Irred(G)$ is a finite set.
 
 \subsection{Chapter Three: Bonus Goodies} % SECTION:
-\par All good things come in threes, and the missing partner to characters and conjugacy is the left-regular representation $\mathbb{C}[G]$. A telling of this story which does not take such broad strokes would actually reveal, in showing that the irreducible characters span $\mathbb{C}^{\Classes(G)}$ (as part of proving \ref{result:irreducible-characters-orthonormal-basis}), that the left-regular representation appears. To take yet another broad stroke, the conclusion here is that this representation can be completely torn apart.
+\par All good things come in threes, and the missing partner to characters and conjugacy is the left-regular representation $\mathbb{C}[G]$. A telling of this story which does not take such broad strokes would actually reveal, in showing that the irreducible characters span $\mathbb{C}^{\Classes(G)}$ (as part of proving \ref{result:irreducible-characters-orthonormal-basis}), that the left-regular representation appears. To take yet another broad stroke, the conclusion here is that this representation can be completely torn apart, and it summarises useful information about irreducible representations.
 \begin{proposition}[The left-regular representation summarises the irreducible modules]
 \label{result:kill-left-regular}
   \pan The left-regular representation $\mathbb{C}[G]$ decomposes as
@@ -286,12 +302,12 @@ and therefore,
   \end{align*}
   \pan This gives another proof, independent of \ref{result:irreducible-characters-orthonormal-basis}, that irreducible characters biject with conjugacy classes.
 \end{proposition}
-\par If your goal is to apply representation theory to distinguish groups, the story told thus far should guide you towards finding characters. The ``holy grail'' in this avenue is to list the character table of any finite groups you care about (see section \ref{sec:tables}), and point at different tables to tell apart many groups. However, before you go out on such an odyssey, let us close this story with some words on induction and restriction.
+\par If your goal is to apply representation theory to distinguish groups, the story told thus far should guide you towards finding characters. The ``holy grail'' in this avenue is to list the character table of any finite groups you care about (see section \ref{sec:tables}), and point at different tables to tell apart many groups. However, before we leave you to such calculations, let us close this story with some words on induction and restriction.
 \begin{theorem}[Frobenius reciprocity]
 \label{result:frobenius-reciprocity}
   \pan Fix $H \leq G$ in $\FinGroup$ and an enumeration $\set*{x_{\alpha} H}_{\alpha \in \mathcal{A}}$ of the cosets in $G / H$. The adjoint functors $\Ind_H^G \dashv \Res^G_H$ act in characters by
   \begin{align*}
-    \begin{tikzcd}[ampersand replacement = \;]
+    \begin{tikzcd}[ampersand replacement = \;, column sep = 2.2em]
       \sum_{\alpha \in \mathcal{A}} \hat{\chi}_U (x_{\alpha}^{-1} (\blank) x_{\alpha})
       \; \set*{\text{char's of } G}
       \; \FinVect^G
